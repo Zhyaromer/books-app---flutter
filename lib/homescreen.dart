@@ -22,6 +22,7 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
             color: Colors.white,
           ),
         ),
+        automaticallyImplyLeading: false,
         centerTitle: false,
         iconTheme: IconThemeData(color: Colors.white),
         actions: [

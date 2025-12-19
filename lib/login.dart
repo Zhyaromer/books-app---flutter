@@ -1,8 +1,11 @@
+import 'package:books_app__flutter/homescreen.dart';
 import 'package:books_app__flutter/signup.dart';
 import 'package:books_app__flutter/widgets/form%20components/iconBox.dart';
 import 'package:books_app__flutter/widgets/form%20components/passwordFormFieldCustom.dart';
 import 'package:books_app__flutter/widgets/form%20components/textFormFieldCustom.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:books_app__flutter/Dio.dart';
 
 class loginscreen extends StatefulWidget {
   const loginscreen({super.key});
@@ -29,27 +32,74 @@ class _loginscreenState extends State<loginscreen> {
     super.initState();
   }
 
-  void _submitLogin() {
-    if (_formKey.currentState!.validate()) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
+  Future<void> _loginBackend() async {
+    try {
+      final res = await dio.post(
+        '/auth/login_f',
+        data: {
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => AlertDialog(
             title: const Text('Login Successful'),
-            content: const Text('You have successfully logged in.'),
+            content: Text(
+              res.data['message'] ?? 'You have logged in successfully.',
+            ),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return BookLibraryApp();
+                      },
+                    ),
+                  );
                 },
                 child: const Text('OK'),
               ),
             ],
-          );
-        },
-      );
+          ),
+        );
+        _formKey.currentState!.reset();
+      }
+    } catch (e) {
+      String errorMsg = 'Unknown error occurred';
+      if (e is DioException) {
+        if (e.response != null && e.response?.data != null) {
+          errorMsg = e.response!.data['message'] ?? errorMsg;
+        } else {
+          errorMsg = e.message!;
+        }
+      }
 
-      _formKey.currentState!.reset();
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Login Failed'),
+          content: Text(errorMsg),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  void _submitLogin() {
+    if (_formKey.currentState!.validate()) {
+      _loginBackend();
     }
   }
 

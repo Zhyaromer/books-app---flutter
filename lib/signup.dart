@@ -1,8 +1,10 @@
+import 'package:books_app__flutter/Dio.dart';
 import 'package:books_app__flutter/login.dart';
 import 'package:books_app__flutter/widgets/form%20components/iconBox.dart';
 import 'package:books_app__flutter/widgets/form%20components/passwordFormFieldCustom.dart';
 import 'package:books_app__flutter/widgets/form%20components/textFormFieldCustom.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 
 class signupscreen extends StatefulWidget {
   const signupscreen({super.key});
@@ -37,46 +39,77 @@ class _signupscreenState extends State<signupscreen> {
     super.dispose();
   }
 
-  void _submitSignup() {
-    if (_formKey.currentState!.validate()) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
+  Future<void> _signupBackend() async {
+    try {
+      final res = await dio.post(
+        '/auth/signup',
+        data: {
+          'username': _usernameController.text,
+          'name': _usernameController.text,
+          'email': _emailController.text,
+          'password': _passwordController.text,
+          'conformPassword': _confirmPasswordController.text,
+        },
+      );
+
+      if (res.statusCode == 201) {
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) => AlertDialog(
             title: const Text('Signup Successful'),
             content: Text(
-              'You have successfully signed up as ${_usernameController.text}',
+              res.data['message'] ?? 'You have signed up successfully.',
             ),
             actions: [
               TextButton(
                 onPressed: () {
-                  _formKey.currentState!.reset();
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return loginscreen();
+                      },
+                    ),
+                  );
                 },
                 child: const Text('OK'),
               ),
             ],
-          );
-        },
-      );
-    } else {
+          ),
+        );
+        _formKey.currentState!.reset();
+      }
+    } catch (e) {
+      String errorMsg = 'Unknown error occurred';
+      if (e is DioException) {
+        if (e.response != null && e.response?.data != null) {
+          errorMsg = e.response!.data['message'] ?? errorMsg;
+        } else {
+          errorMsg = e.message!;
+        }
+      }
+
       showDialog(
         context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Signup Failed'),
-            content: Text('Please fix the errors in red before submitting.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
+        builder: (context) => AlertDialog(
+          title: const Text('Signup Failed'),
+          content: Text(errorMsg),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
       );
+    }
+  }
+
+  void _submitSignup() {
+    if (_formKey.currentState!.validate()) {
+      _signupBackend();
     }
   }
 

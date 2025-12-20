@@ -1,10 +1,14 @@
+import 'package:books_app__flutter/homescreen.dart';
 import 'package:books_app__flutter/login.dart';
 import 'package:books_app__flutter/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    MaterialApp(home: const startscreen(), debugShowCheckedModeBanner: false),
+    MaterialApp(
+      home: const BookLibraryApp(),
+      debugShowCheckedModeBanner: false,
+    ),
   );
 }
 

@@ -40,3 +40,16 @@ Future<List<Books>> fetchBooks() async {
     throw Exception('Failed to load books');
   }
 }
+
+Future<List<Books>> fetchRandomBooks(String genre) async {
+  final res = await Dio().get(
+    'http://localhost:3000/books/getRandomBooks?genre=$genre',
+  );
+
+  if (res.statusCode == 200) {
+    final List data = res.data;
+    return data.map((e) => Books.fromJson(e)).toList();
+  } else {
+    throw Exception('Failed to load books');
+  }
+}

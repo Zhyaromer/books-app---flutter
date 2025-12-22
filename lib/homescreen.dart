@@ -344,7 +344,7 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                bookdetails(book: book),
+                                                BookDetails(book_id: book.id),
                                           ),
                                         );
                                       },

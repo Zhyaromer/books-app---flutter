@@ -38,6 +38,7 @@ class _BookDetailsState extends State<BookDetails> {
 
         final bookDetail = snapshot.data!;
         final book = bookDetail.book;
+        final reviews = bookDetail.reviews;
         final Series? series = bookDetail.series?.isNotEmpty == true
             ? bookDetail.series!.first
             : null;
@@ -56,8 +57,7 @@ class _BookDetailsState extends State<BookDetails> {
             centerTitle: true,
             backgroundColor: Colors.transparent,
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(14),
+          body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -118,13 +118,16 @@ class _BookDetailsState extends State<BookDetails> {
 
                 const SizedBox(height: 10),
                 Center(
-                  child: Text(
-                    book?.title ?? 'Unknown Title',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      book?.title ?? 'Unknown Title',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -147,7 +150,7 @@ class _BookDetailsState extends State<BookDetails> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '${book?.language ?? 'Unknown Language'}',
+                      book?.language ?? 'Unknown Language',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white70,
@@ -388,6 +391,178 @@ class _BookDetailsState extends State<BookDetails> {
                         ),
                       ],
                     ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 60,
+                    vertical: 15,
+                  ),
+                  decoration: BoxDecoration(color: Colors.grey[900]),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20),
+                      const Text(
+                        'Description',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        book.description ?? 'No description available.',
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 60,
+                    vertical: 0,
+                  ),
+                  decoration: BoxDecoration(color: Colors.grey[900]),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Customer Reviews (${reviews?.length ?? 0})',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      SizedBox(
+                        height: 250,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: reviews?.length ?? 0,
+                          itemBuilder: (context, index) {
+                            final review = reviews![index];
+                            return Container(
+                              width: 300,
+                              margin: const EdgeInsets.only(right: 30),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[850],
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                  horizontal: 12.0,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 25,
+                                              backgroundImage:
+                                                  review?.coverImgURL != null
+                                                  ? NetworkImage(
+                                                      review!.coverImgURL!,
+                                                    )
+                                                  : null,
+                                              child: review?.coverImgURL == null
+                                                  ? const Icon(
+                                                      Icons.person,
+                                                      size: 16,
+                                                    )
+                                                  : null,
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              review?.username ?? 'Anonymous',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Colors.yellow[700],
+                                                  size: 16,
+                                                ),
+                                                const SizedBox(width: 4),
+                                                Text(
+                                                  review?.rating != null
+                                                      ? review!.rating!
+                                                            .toStringAsFixed(1)
+                                                      : 'N/A',
+                                                  style: const TextStyle(
+                                                    color: Colors.white70,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+
+                                            const SizedBox(height: 4),
+
+                                            Text(
+                                              review?.created_at != null
+                                                  ? review!.created_at!
+                                                        .substring(0, 10)
+                                                  : 'N/A',
+                                              style: const TextStyle(
+                                                color: Colors.white38,
+                                                fontSize: 10,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 7),
+                                    Divider(color: Colors.white24),
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        review?.comment ??
+                                            'No comment provided.',
+                                        style: const TextStyle(
+                                          color: Colors.white70,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

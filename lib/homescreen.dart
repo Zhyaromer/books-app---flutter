@@ -363,14 +363,17 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Row(
                                               children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                  child: Image.network(
-                                                    book.cover_image,
-                                                    width: 100,
-                                                    height: 160,
-                                                    fit: BoxFit.cover,
+                                                Hero(
+                                                  tag: 'book_cover_${book.id}',
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(8),
+                                                    child: Image.network(
+                                                      book.cover_image,
+                                                      width: 100,
+                                                      height: 160,
+                                                      fit: BoxFit.fill,
+                                                    ),
                                                   ),
                                                 ),
                                                 const SizedBox(width: 20),

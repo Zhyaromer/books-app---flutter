@@ -64,18 +64,32 @@ class _BookDetailsState extends State<BookDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(height: 20),
+
                 Center(
                   child: Stack(
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: book?.cover_image != null
-                            ? Image.network(
-                                book!.cover_image!,
-                                height: 265,
-                                fit: BoxFit.cover,
-                              )
-                            : const Icon(Icons.book, size: 100),
+                      GestureDetector(
+                        onTap: () {
+                          _openImagePreview(
+                            context,
+                            book!.cover_image!,
+                            'book_cover_${book.id}',
+                          );
+                        },
+                        child: Hero(
+                          tag: 'book_cover_${book?.id}',
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: book?.cover_image != null
+                                ? Image.network(
+                                    book!.cover_image!,
+                                    height: 265,
+                                    fit: BoxFit.cover,
+                                  )
+                                : const Icon(Icons.book, size: 100),
+                          ),
+                        ),
                       ),
 
                       Positioned(
@@ -837,4 +851,29 @@ class _BookDetailsState extends State<BookDetails> {
       },
     );
   }
+}
+
+void _openImagePreview(BuildContext context, String imageUrl, String tag) {
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: '',
+    barrierColor: Colors.black.withOpacity(0.9),
+    transitionDuration: const Duration(milliseconds: 300),
+    pageBuilder: (_, _, _) {
+      return GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: Center(
+          child: Hero(
+            tag: tag,
+            child: InteractiveViewer(
+              minScale: 1,
+              maxScale: 4,
+              child: Image.network(imageUrl, fit: BoxFit.fill),
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }

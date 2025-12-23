@@ -1,3 +1,4 @@
+import 'package:books_app__flutter/authordetails.dart';
 import 'package:books_app__flutter/model/BookDetailResponse.dart';
 import 'package:flutter/material.dart';
 
@@ -359,54 +360,65 @@ class _BookDetailsState extends State<BookDetails> {
 
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60),
-                  child: Container(
-                    height: 150,
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage: bookDetail.book?.imgURL != null
-                              ? NetworkImage(bookDetail.book!.imgURL!)
-                              : null,
-                          child: bookDetail.book?.imgURL == null
-                              ? const Icon(Icons.person, size: 40)
-                              : null,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              AuthorDetails(id: bookDetail.book!.author_id!),
                         ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                bookDetail.book?.name ?? 'Unknown Author',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                bookDetail.book?.bio ??
-                                    'No biography available.',
-                                style: const TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 14,
-                                ),
-                                maxLines: 4,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
+                      );
+                    },
+                    child: Container(
+                      height: 150,
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[900],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage: bookDetail.book?.imgURL != null
+                                ? NetworkImage(bookDetail.book!.imgURL!)
+                                : null,
+                            child: bookDetail.book?.imgURL == null
+                                ? const Icon(Icons.person, size: 40)
+                                : null,
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  bookDetail.book?.name ?? 'Unknown Author',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  bookDetail.book?.bio ??
+                                      'No biography available.',
+                                  style: const TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 14,
+                                  ),
+                                  maxLines: 4,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

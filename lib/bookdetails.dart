@@ -39,6 +39,7 @@ class _BookDetailsState extends State<BookDetails> {
         final bookDetail = snapshot.data!;
         final book = bookDetail.book;
         final reviews = bookDetail.reviews;
+        final similiarBooks = bookDetail.similarBooks;
         final Series? series = bookDetail.series?.isNotEmpty == true
             ? bookDetail.series!.first
             : null;
@@ -431,7 +432,7 @@ class _BookDetailsState extends State<BookDetails> {
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 60,
-                    vertical: 0,
+                    vertical: 30,
                   ),
                   decoration: BoxDecoration(color: Colors.grey[900]),
                   child: Column(
@@ -457,7 +458,7 @@ class _BookDetailsState extends State<BookDetails> {
                             final review = reviews![index];
                             return Container(
                               width: 300,
-                              margin: const EdgeInsets.only(right: 30),
+                              margin: const EdgeInsets.only(right: 20),
                               decoration: BoxDecoration(
                                 color: Colors.grey[850],
                                 borderRadius: BorderRadius.circular(12),
@@ -563,6 +564,73 @@ class _BookDetailsState extends State<BookDetails> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
+                SizedBox(
+                  height: 400,
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 60,
+                      vertical: 20,
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: const [
+                            Text(
+                              'Similar Books',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 6),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.white54,
+                              size: 18,
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        SizedBox(
+                          height: 300,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: similiarBooks?.length ?? 0,
+                            itemBuilder: (BuildContext context, int index) {
+                              final similiarBook = similiarBooks![index];
+                              return Container(
+                                width: 160,
+                                margin: const EdgeInsets.only(right: 15),
+                                child: Column(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: similiarBook?.cover_image != null
+                                          ? Image.network(
+                                              similiarBook?.cover_image! ?? '',
+                                              height: 270,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : const Icon(Icons.book, size: 80),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

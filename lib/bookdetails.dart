@@ -44,6 +44,8 @@ class _BookDetailsState extends State<BookDetails> {
             ? bookDetail.series!.first
             : null;
 
+        final seriesBooks = bookDetail.seriesBooks;
+
         return Scaffold(
           backgroundColor: const Color(0xFF121212),
           appBar: AppBar(
@@ -430,9 +432,11 @@ class _BookDetailsState extends State<BookDetails> {
 
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 60,
-                    vertical: 30,
+                  padding: const EdgeInsets.only(
+                    top: 30,
+                    bottom: 30,
+                    left: 60,
+                    right: 0,
                   ),
                   decoration: BoxDecoration(color: Colors.grey[900]),
                   child: Column(
@@ -449,188 +453,381 @@ class _BookDetailsState extends State<BookDetails> {
 
                       const SizedBox(height: 20),
 
-                      SizedBox(
-                        height: 250,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: reviews?.length ?? 0,
-                          itemBuilder: (context, index) {
-                            final review = reviews![index];
-                            return Container(
-                              width: 300,
-                              margin: const EdgeInsets.only(right: 20),
-                              decoration: BoxDecoration(
-                                color: Colors.grey[850],
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8.0,
-                                  horizontal: 12.0,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 25,
-                                              backgroundImage:
-                                                  review?.coverImgURL != null
-                                                  ? NetworkImage(
-                                                      review!.coverImgURL!,
-                                                    )
-                                                  : null,
-                                              child: review?.coverImgURL == null
-                                                  ? const Icon(
-                                                      Icons.person,
-                                                      size: 16,
-                                                    )
-                                                  : null,
-                                            ),
-                                            const SizedBox(width: 8),
-                                            Text(
-                                              review?.username ?? 'Anonymous',
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.star,
-                                                  color: Colors.yellow[700],
-                                                  size: 16,
-                                                ),
-                                                const SizedBox(width: 4),
-                                                Text(
-                                                  review?.rating != null
-                                                      ? review!.rating!
-                                                            .toStringAsFixed(1)
-                                                      : 'N/A',
-                                                  style: const TextStyle(
-                                                    color: Colors.white70,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-
-                                            const SizedBox(height: 4),
-
-                                            Text(
-                                              review?.created_at != null
-                                                  ? review!.created_at!
-                                                        .substring(0, 10)
-                                                  : 'N/A',
-                                              style: const TextStyle(
-                                                color: Colors.white38,
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 7),
-                                    Divider(color: Colors.white24),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        review?.comment ??
-                                            'No comment provided.',
-                                        style: const TextStyle(
-                                          color: Colors.white70,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 30),
-
-                SizedBox(
-                  height: 400,
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 60,
-                      vertical: 20,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: const [
-                            Text(
-                              'Similar Books',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(width: 6),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: Colors.white54,
-                              size: 18,
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 20),
-
+                      if (reviews!.isNotEmpty) ...[
                         SizedBox(
-                          height: 300,
+                          height: 250,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: similiarBooks?.length ?? 0,
-                            itemBuilder: (BuildContext context, int index) {
-                              final similiarBook = similiarBooks![index];
+                            itemCount: reviews.length,
+                            itemBuilder: (context, index) {
+                              final review = reviews[index];
                               return Container(
-                                width: 160,
-                                margin: const EdgeInsets.only(right: 15),
-                                child: Column(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: similiarBook?.cover_image != null
-                                          ? Image.network(
-                                              similiarBook?.cover_image! ?? '',
-                                              height: 270,
-                                              fit: BoxFit.cover,
-                                            )
-                                          : const Icon(Icons.book, size: 80),
-                                    ),
-                                  ],
+                                width: 300,
+                                margin: const EdgeInsets.only(right: 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[850],
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 8.0,
+                                    horizontal: 12.0,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 25,
+                                                backgroundImage:
+                                                    review?.coverImgURL != null
+                                                    ? NetworkImage(
+                                                        review!.coverImgURL!,
+                                                      )
+                                                    : null,
+                                                child:
+                                                    review?.coverImgURL == null
+                                                    ? const Icon(
+                                                        Icons.person,
+                                                        size: 16,
+                                                      )
+                                                    : null,
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                review?.username ?? 'Anonymous',
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: Colors.yellow[700],
+                                                    size: 16,
+                                                  ),
+                                                  const SizedBox(width: 4),
+                                                  Text(
+                                                    review?.rating != null
+                                                        ? review!.rating!
+                                                              .toStringAsFixed(
+                                                                1,
+                                                              )
+                                                        : 'N/A',
+                                                    style: const TextStyle(
+                                                      color: Colors.white70,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+
+                                              const SizedBox(height: 4),
+
+                                              Text(
+                                                review?.created_at != null
+                                                    ? review!.created_at!
+                                                          .substring(0, 10)
+                                                    : 'N/A',
+                                                style: const TextStyle(
+                                                  color: Colors.white38,
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 7),
+                                      Divider(color: Colors.white24),
+                                      Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          review?.comment ??
+                                              'No comment provided.',
+                                          style: const TextStyle(
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },
                           ),
                         ),
+                      ] else ...[
+                        SizedBox(height: 50),
+                        Center(
+                          child: const Text(
+                            'No reviews available for this book.',
+                            style: TextStyle(color: Colors.white70),
+                          ),
+                        ),
+                        SizedBox(height: 50),
                       ],
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                if (similiarBooks!.isNotEmpty) ...[
+                  SizedBox(
+                    height: 390,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                        bottom: 20,
+                        left: 60,
+                        right: 0,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: const [
+                              Text(
+                                'Similar Books',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(width: 6),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.white54,
+                                size: 18,
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          SizedBox(
+                            height: 300,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: similiarBooks.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final similiarBook = similiarBooks[index];
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => BookDetails(
+                                          book_id: similiarBook!.id!,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 160,
+                                    margin: const EdgeInsets.only(right: 15),
+                                    child: Column(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child:
+                                              similiarBook?.cover_image != null
+                                              ? Image.network(
+                                                  similiarBook?.cover_image! ??
+                                                      '',
+                                                  height: 270,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : const Icon(
+                                                  Icons.book,
+                                                  size: 80,
+                                                ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
+                  ),
+                ],
+
+                Center(
+                  child: Divider(
+                    color: Colors.white24,
+                    thickness: 2,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                if (series != null) ...[
+                  SizedBox(
+                    height: 400,
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                        bottom: 20,
+                        left: 60,
+                        right: 0,
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'Series Books of - ${series.series_title ?? ''}',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(width: 6),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.white54,
+                                size: 18,
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 20),
+
+                          SizedBox(
+                            height: 300,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: seriesBooks?.length ?? 0,
+                              itemBuilder: (BuildContext context, int index) {
+                                final seriesBook = seriesBooks![index];
+                                return InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => BookDetails(
+                                          book_id: seriesBook!.id!,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 160,
+                                    margin: const EdgeInsets.only(right: 15),
+                                    child: Column(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: seriesBook?.cover_image != null
+                                              ? Image.network(
+                                                  seriesBook?.cover_image! ??
+                                                      '',
+                                                  height: 270,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : const Icon(
+                                                  Icons.book,
+                                                  size: 80,
+                                                ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+
+                const SizedBox(height: 30),
+
+                Container(
+                  width: double.infinity,
+                  height: 150,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 60,
+                    vertical: 15,
+                  ),
+                  decoration: BoxDecoration(color: Colors.grey[900]),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 20),
+                      const Text(
+                        'follow Us on Social Media',
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.facebook, size: 30),
+                            color: Colors.white,
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.linked_camera, size: 30),
+                            color: Colors.white,
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.camera, size: 30),
+                            color: Colors.white,
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.share_location_rounded,
+                              size: 30,
+                            ),
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],

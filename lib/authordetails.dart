@@ -63,13 +63,24 @@ class _AuthorDetailsState extends State<AuthorDetails> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.network(
-                                author?.imgURL ?? '',
-                                fit: BoxFit.cover,
-                                width: 200,
-                                height: 300,
+                            GestureDetector(
+                              onTap: () {
+                                _openImagePreview(
+                                  context,
+                                  author?.imgURL ?? '',
+                                );
+                              },
+                              child: Hero(
+                                tag: author?.imgURL ?? '',
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.network(
+                                    author?.imgURL ?? '',
+                                    fit: BoxFit.cover,
+                                    width: 200,
+                                    height: 300,
+                                  ),
+                                ),
                               ),
                             ),
                             const SizedBox(height: 26),
@@ -263,4 +274,31 @@ class _AuthorDetailsState extends State<AuthorDetails> {
       },
     );
   }
+}
+
+void _openImagePreview(BuildContext context, String imageUrl) {
+  showGeneralDialog(
+    transitionDuration: Duration(milliseconds: 300),
+    barrierColor: Colors.black45.withOpacity(0.8),
+    barrierDismissible: true,
+    barrierLabel: '',
+    context: context,
+    pageBuilder: (_, _, _) {
+      return GestureDetector(
+        onTap: () {
+          Navigator.of(context).pop();
+        },
+        child: Center(
+          child: Hero(
+            tag: imageUrl,
+            child: InteractiveViewer(
+              minScale: 1.0,
+              maxScale: 4.0,
+              child: Image.network(imageUrl),
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }

@@ -1,5 +1,6 @@
 import 'package:books_app__flutter/authordetails.dart';
 import 'package:books_app__flutter/model/BookDetailResponse.dart';
+import 'package:books_app__flutter/seriesdetails.dart';
 import 'package:flutter/material.dart';
 
 class BookDetails extends StatefulWidget {
@@ -204,7 +205,7 @@ class _BookDetailsState extends State<BookDetails> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 60),
                   child: Container(
-                    height: 140,
+                    height: 150,
                     padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       color: Colors.grey[900],
@@ -272,27 +273,29 @@ class _BookDetailsState extends State<BookDetails> {
 
                             const SizedBox(width: 8),
 
-                            Text(
-                              ' * ',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 13,
+                            if (series?.series_title != null) ...[
+                              Text(
+                                ' * ',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 13,
+                                ),
                               ),
-                            ),
 
-                            const SizedBox(width: 8),
+                              const SizedBox(width: 8),
 
-                            Text(
-                              'Series of ${series?.series_title ?? 'N/A'}',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 13,
+                              Text(
+                                'Series of ${series?.series_title ?? 'N/A'}',
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: 13,
+                                ),
                               ),
-                            ),
+                            ],
                           ],
                         ),
 
-                        SizedBox(height: 16),
+                        SizedBox(height: 20),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -326,6 +329,46 @@ class _BookDetailsState extends State<BookDetails> {
                             ),
 
                             const SizedBox(width: 20),
+
+                            if (series?.series_title != null) ...[
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          seriesdetails(series_id: series!.id!),
+                                    ),
+                                  );
+                                },
+                                style: ButtonStyle(
+                                  padding: MaterialStateProperty.all(
+                                    const EdgeInsets.symmetric(
+                                      horizontal: 30,
+                                      vertical: 18,
+                                    ),
+                                  ),
+                                  backgroundColor: MaterialStateProperty.all(
+                                    Colors.grey[800],
+                                  ),
+                                ),
+                                child: Row(
+                                  children: const [
+                                    Icon(Icons.book, color: Colors.white),
+                                    SizedBox(width: 8),
+                                    Text(
+                                      'View Series',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              const SizedBox(width: 20),
+                            ],
 
                             ElevatedButton(
                               onPressed: () {},

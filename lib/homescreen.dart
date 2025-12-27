@@ -57,16 +57,17 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border),
-              label: 'Favorites',
+              icon: Icon(Icons.book_online),
+              label: 'my Books',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart),
-              label: 'Cart',
+              icon: Icon(Icons.explore),
+              label: 'Discover',
             ),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              label: 'Profile',
+              icon: Icon(Icons.more_horiz),
+              label: 'More',
             ),
           ],
         ),
@@ -367,7 +368,9 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
                                                   tag: 'book_cover_${book.id}',
                                                   child: ClipRRect(
                                                     borderRadius:
-                                                        BorderRadius.circular(8),
+                                                        BorderRadius.circular(
+                                                          8,
+                                                        ),
                                                     child: Image.network(
                                                       book.cover_image,
                                                       width: 100,

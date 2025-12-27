@@ -1,3 +1,4 @@
+import 'package:books_app__flutter/bookdetails.dart';
 import 'package:books_app__flutter/model/SeriesDetailsResponse.dart';
 import 'package:flutter/material.dart';
 
@@ -145,142 +146,154 @@ class _seriesdetailsState extends State<seriesdetails> {
                             ),
                           ],
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              if (book.cover_image != null)
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.network(
-                                    book.cover_image!,
-                                    height: double.infinity,
-                                    width: 140,
-                                    fit: BoxFit.fill,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return BookDetails(book_id: book.id!);
+                                },
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                if (book.cover_image != null)
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.network(
+                                      book.cover_image!,
+                                      height: double.infinity,
+                                      width: 140,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
-                                ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          book.title ?? 'No Title',
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            book.title ?? 'No Title',
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 10,
+                                              vertical: 4,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.teal,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: Text(
+                                              (index + 1).toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      const SizedBox(height: 12),
+
+                                      Row(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.calendar_today,
+                                                color: Colors.white70,
+                                                size: 14,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                book.published_date?.substring(
+                                                      0,
+                                                      10,
+                                                    ) ??
+                                                    'Unknown',
+                                                style: const TextStyle(
+                                                  color: Colors.white70,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          SizedBox(width: 12),
+
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.category,
+                                                color: Colors.white70,
+                                                size: 14,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                book.genre ?? 'Unknown',
+                                                style: const TextStyle(
+                                                  color: Colors.white70,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+
+                                          SizedBox(width: 12),
+
+                                          Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.menu_book,
+                                                color: Colors.white70,
+                                                size: 14,
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                book.page_count.toString(),
+                                                style: const TextStyle(
+                                                  color: Colors.white70,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+
+                                      const SizedBox(height: 16),
+
+                                      Expanded(
+                                        child: Text(
+                                          book.description ?? 'No Description',
                                           style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                                            color: Colors.white70,
                                           ),
                                           overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
                                         ),
-
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                            vertical: 4,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Colors.teal,
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                          ),
-                                          child: Text(
-                                            (index + 1).toString(),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-
-                                    const SizedBox(height: 12),
-
-                                    Row(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.calendar_today,
-                                              color: Colors.white70,
-                                              size: 14,
-                                            ),
-                                            const SizedBox(width: 5),
-                                            Text(
-                                              book.published_date?.substring(
-                                                    0,
-                                                    10,
-                                                  ) ??
-                                                  'Unknown',
-                                              style: const TextStyle(
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        SizedBox(width: 12),
-
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.category,
-                                              color: Colors.white70,
-                                              size: 14,
-                                            ),
-                                            const SizedBox(width: 5),
-                                            Text(
-                                              book.genre ?? 'Unknown',
-                                              style: const TextStyle(
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        SizedBox(width: 12),
-
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.menu_book,
-                                              color: Colors.white70,
-                                              size: 14,
-                                            ),
-                                            const SizedBox(width: 5),
-                                            Text(
-                                              book.page_count.toString(),
-                                              style: const TextStyle(
-                                                color: Colors.white70,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-
-                                    const SizedBox(height: 16),
-
-                                    Expanded(
-                                      child: Text(
-                                        book.description ?? 'No Description',
-                                        style: const TextStyle(
-                                          color: Colors.white70,
-                                        ),
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 3,
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );

@@ -42,6 +42,19 @@ Future<List<Books>> fetchBooks() async {
   }
 }
 
+Future<List<Books>> fetchBooksByPage(int page) async {
+  final res = await Dio().get(
+    'http://localhost:3000/books/getAllBooks?page=$page&limit=8',
+  );
+
+  if (res.statusCode == 200) {
+    final List data = res.data['books'];
+    return data.map((e) => Books.fromJson(e)).toList();
+  } else {
+    throw Exception('Failed to load books');
+  }
+}
+
 Future<List<Books>> fetchRandomBooks(String genre) async {
   final res = await Dio().get(
     'http://localhost:3000/books/getRandomBooks?genre=$genre',
@@ -49,6 +62,19 @@ Future<List<Books>> fetchRandomBooks(String genre) async {
 
   if (res.statusCode == 200) {
     final List data = res.data;
+    return data.map((e) => Books.fromJson(e)).toList();
+  } else {
+    throw Exception('Failed to load books');
+  }
+}
+
+Future<List<Books>> getSpecifiedGenreBooks(String query) async {
+  final res = await Dio().get(
+    'http://localhost:3000/books/getAllBooks?genre=$query',
+  );
+
+  if (res.statusCode == 200) {
+    final List data = res.data['books'];
     return data.map((e) => Books.fromJson(e)).toList();
   } else {
     throw Exception('Failed to load books');

@@ -1,5 +1,6 @@
 import 'package:books_app__flutter/authordetails.dart';
 import 'package:books_app__flutter/model/BookDetailResponse.dart';
+import 'package:books_app__flutter/model/reading_status_list.dart';
 import 'package:books_app__flutter/seriesdetails.dart';
 import 'package:flutter/material.dart';
 
@@ -13,11 +14,13 @@ class BookDetails extends StatefulWidget {
 
 class _BookDetailsState extends State<BookDetails> {
   late Future<BookDetailResponse> bookDetailFuture;
+  String selectedLabel = 'Want To Read';
 
   @override
   void initState() {
     super.initState();
     bookDetailFuture = fetchBookDetail(widget.book_id);
+    selectedLabel = getSelectedStatusLabel(widget.book_id);
   }
 
   @override
@@ -61,7 +64,248 @@ class _BookDetailsState extends State<BookDetails> {
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.menu, color: Colors.white),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return StatefulBuilder(
+                        builder: (BuildContext context, setState) {
+                          return Container(
+                            height: 400,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(20),
+                                topRight: Radius.circular(20),
+                              ),
+                              color: const Color(0xFF2C2C2C),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 28.0,
+                              ),
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    leading: const Icon(
+                                      Icons.library_add,
+                                      color: Colors.white,
+                                    ),
+                                    title: const Text(
+                                      'add to your library',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      String tempSelectedLabel = selectedLabel;
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return StatefulBuilder(
+                                            builder:
+                                                (
+                                                  BuildContext context,
+                                                  StateSetter setModalState,
+                                                ) {
+                                                  return Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          const BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                  20,
+                                                                ),
+                                                            topRight:
+                                                                Radius.circular(
+                                                                  20,
+                                                                ),
+                                                          ),
+                                                      color: const Color(
+                                                        0xFF2C2C2C,
+                                                      ),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.symmetric(
+                                                            horizontal: 16.0,
+                                                            vertical: 20.0,
+                                                          ),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                    context,
+                                                                  );
+                                                                },
+                                                                child: const Text(
+                                                                  'Cancel',
+                                                                  style: TextStyle(
+                                                                    color: Colors
+                                                                        .lightBlueAccent,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                'Add to Library',
+                                                                style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              TextButton(
+                                                                style: TextButton.styleFrom(
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .black,
+                                                                ),
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                    context,
+                                                                  );
+                                                                  setState(() {
+                                                                    selectedLabel =
+                                                                        tempSelectedLabel;
+                                                                  });
+                                                                  addOrUpdateBookStatus(
+                                                                    widget
+                                                                        .book_id,
+                                                                    tempSelectedLabel,
+                                                                    book!,
+                                                                  );
+                                                                },
+                                                                child: const Text(
+                                                                  'Save',
+                                                                  style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+
+                                                          Divider(
+                                                            color:
+                                                                Colors.white30,
+                                                          ),
+
+                                                          SizedBox(height: 10),
+
+                                                          Text(
+                                                            'Set your reading status',
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .white70,
+                                                            ),
+                                                          ),
+
+                                                          SizedBox(height: 10),
+
+                                                          Expanded(
+                                                            child: ListView.builder(
+                                                              itemCount:
+                                                                  allStatusesList()
+                                                                      .length,
+                                                              itemBuilder: (context, index) {
+                                                                final statusItem =
+                                                                    allStatusesList()[index];
+                                                                print(
+                                                                  statusItem
+                                                                      .label,
+                                                                );
+                                                                print(
+                                                                  tempSelectedLabel ==
+                                                                      statusItem
+                                                                          .label,
+                                                                );
+                                                                print(
+                                                                  tempSelectedLabel,
+                                                                );
+                                                                return RadioListTile(
+                                                                  selected:
+                                                                      tempSelectedLabel ==
+                                                                      statusItem
+                                                                          .label,
+                                                                  activeColor:
+                                                                      Colors
+                                                                          .lightBlueAccent,
+                                                                  title: Text(
+                                                                    statusItem
+                                                                        .label,
+                                                                    style: TextStyle(
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                  value:
+                                                                      statusItem
+                                                                          .label,
+                                                                  groupValue:
+                                                                      tempSelectedLabel,
+                                                                  onChanged: (value) {
+                                                                    setModalState(() {
+                                                                      tempSelectedLabel =
+                                                                          value
+                                                                              .toString();
+                                                                    });
+                                                                  },
+                                                                );
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  ListTile(
+                                    leading: const Icon(
+                                      Icons.share,
+                                      color: Colors.white,
+                                    ),
+                                    title: const Text(
+                                      'Share',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
           ),
+
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

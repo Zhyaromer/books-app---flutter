@@ -28,13 +28,10 @@ class _MyBooksState extends State<MyBooks> {
                 context: context,
                 barrierColor: Colors.black.withOpacity(0.6),
                 builder: (context) {
-                  final TextEditingController controller =
-                      TextEditingController();
+                  final TextEditingController controller = TextEditingController();
 
                   return Dialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                     backgroundColor: const Color(0xFF1F1F1F),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
@@ -44,21 +41,14 @@ class _MyBooksState extends State<MyBooks> {
                         children: [
                           const Text(
                             'Add Reading Status',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
                           ),
 
                           const SizedBox(height: 6),
 
                           const Text(
                             'Create a custom label for your reading progress',
-                            style: TextStyle(
-                              color: Colors.white60,
-                              fontSize: 13,
-                            ),
+                            style: TextStyle(color: Colors.white60, fontSize: 13),
                           ),
 
                           const SizedBox(height: 18),
@@ -72,10 +62,7 @@ class _MyBooksState extends State<MyBooks> {
                               hintStyle: const TextStyle(color: Colors.white38),
                               filled: true,
                               fillColor: const Color(0xFF2A2A2A),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 14,
-                                vertical: 14,
-                              ),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(14),
                                 borderSide: BorderSide.none,
@@ -90,59 +77,34 @@ class _MyBooksState extends State<MyBooks> {
                             children: [
                               TextButton(
                                 onPressed: () => Navigator.pop(context),
-                                child: const Text(
-                                  'Cancel',
-                                  style: TextStyle(color: Colors.white54),
-                                ),
+                                child: const Text('Cancel', style: TextStyle(color: Colors.white54)),
                               ),
                               const SizedBox(width: 8),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.deepPurpleAccent,
                                   foregroundColor: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 18,
-                                    vertical: 10,
-                                  ),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                                 ),
                                 onPressed: () {
                                   final value = controller.text.trim();
                                   if (value.isEmpty) return;
 
-                                  if (allStatuses.any(
-                                    (s) =>
-                                        s.label.toLowerCase() ==
-                                        value.toLowerCase(),
-                                  )) {
+                                  if (allStatuses.any((s) => s.label.toLowerCase() == value.toLowerCase())) {
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
-                                        backgroundColor: const Color(
-                                          0xFF2C2C2C,
-                                        ),
-                                        title: const Text(
-                                          'Duplicate Status',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
+                                        backgroundColor: const Color(0xFF2C2C2C),
+                                        title: const Text('Duplicate Status', style: TextStyle(color: Colors.white)),
                                         content: Text(
                                           'The status "$value" already exists. Please choose a different label.',
-                                          style: const TextStyle(
-                                            color: Colors.white70,
-                                          ),
+                                          style: const TextStyle(color: Colors.white70),
                                         ),
                                         actions: [
                                           TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context),
-                                            child: const Text(
-                                              'OK',
-                                              style: TextStyle(
-                                                color: Colors.white54,
-                                              ),
-                                            ),
+                                            onPressed: () => Navigator.pop(context),
+                                            child: const Text('OK', style: TextStyle(color: Colors.white54)),
                                           ),
                                         ],
                                       ),
@@ -158,10 +120,7 @@ class _MyBooksState extends State<MyBooks> {
                                 },
                                 child: const Text(
                                   'Add',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
+                                  style: TextStyle(fontWeight: FontWeight.w600, color: Colors.white),
                                 ),
                               ),
                             ],
@@ -183,10 +142,7 @@ class _MyBooksState extends State<MyBooks> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                'Reading Status List',
-                style: TextStyle(color: Colors.white, fontSize: 14),
-              ),
+              child: Text('Reading Status List', style: TextStyle(color: Colors.white, fontSize: 14)),
             ),
           ),
 
@@ -199,20 +155,12 @@ class _MyBooksState extends State<MyBooks> {
                   final status = allStatuses[index];
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MyBooksDetail(status: status),
-                        ),
-                      );
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyBooksDetail(status: status)));
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 6),
                       padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF2C2C2C),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                      decoration: BoxDecoration(color: const Color(0xFF2C2C2C), borderRadius: BorderRadius.circular(8)),
                       child: Row(
                         children: [
                           ClipRRect(
@@ -231,21 +179,12 @@ class _MyBooksState extends State<MyBooks> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                status.label,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                              ),
+                              Text(status.label, style: const TextStyle(color: Colors.white, fontSize: 16)),
                               SizedBox(height: 8),
 
                               Text(
                                 'Total Books: ${totalBookCountPerStatus(status.label)}',
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 14,
-                                ),
+                                style: const TextStyle(color: Colors.grey, fontSize: 14),
                               ),
                             ],
                           ),

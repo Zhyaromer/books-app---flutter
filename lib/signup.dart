@@ -18,8 +18,7 @@ class _signupscreenState extends State<signupscreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   bool isPasswordVisible = true;
   bool isConfirmPasswordVisible = true;
 
@@ -58,9 +57,7 @@ class _signupscreenState extends State<signupscreen> {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Signup Successful'),
-            content: Text(
-              res.data['message'] ?? 'You have signed up successfully.',
-            ),
+            content: Text(res.data['message'] ?? 'You have signed up successfully.'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -96,12 +93,7 @@ class _signupscreenState extends State<signupscreen> {
         builder: (context) => AlertDialog(
           title: const Text('Signup Failed'),
           content: Text(errorMsg),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
+          actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK'))],
         ),
       );
     }
@@ -126,11 +118,7 @@ class _signupscreenState extends State<signupscreen> {
             children: [
               Text(
                 "Create Account to Get Started",
-                style: TextStyle(
-                  color: Colors.deepPurple,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: TextStyle(color: Colors.deepPurple, fontSize: 30, fontWeight: FontWeight.bold),
               ),
 
               SizedBox(height: 50),
@@ -162,9 +150,7 @@ class _signupscreenState extends State<signupscreen> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter your email';
-                        } else if (!RegExp(
-                          r'^[^@]+@[^@]+\.[^@]+',
-                        ).hasMatch(value)) {
+                        } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                           return 'Please enter a valid email address';
                         }
                         return null;
@@ -232,14 +218,9 @@ class _signupscreenState extends State<signupscreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple,
                         padding: EdgeInsets.symmetric(vertical: 23.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
                       ),
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(fontSize: 18.0, color: Colors.white),
-                      ),
+                      child: Text("Sign Up", style: TextStyle(fontSize: 18.0, color: Colors.white)),
                     ),
                   ),
                 ],
@@ -249,24 +230,9 @@ class _signupscreenState extends State<signupscreen> {
 
               Row(
                 children: [
-                  Expanded(
-                    child: Divider(
-                      color: Colors.grey[400],
-                      thickness: 1,
-                      endIndent: 10,
-                    ),
-                  ),
-                  Text(
-                    'or continue with',
-                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: Colors.grey[400],
-                      thickness: 1,
-                      indent: 10,
-                    ),
-                  ),
+                  Expanded(child: Divider(color: Colors.grey[400], thickness: 1, endIndent: 10)),
+                  Text('or continue with', style: TextStyle(fontSize: 16, color: Colors.grey[600])),
+                  Expanded(child: Divider(color: Colors.grey[400], thickness: 1, indent: 10)),
                 ],
               ),
 
@@ -292,11 +258,7 @@ class _signupscreenState extends State<signupscreen> {
                 children: [
                   Text(
                     'Already a Member?',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[700],
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.grey[700], fontWeight: FontWeight.bold),
                   ),
                   SizedBox(width: 5),
                   InkWell(

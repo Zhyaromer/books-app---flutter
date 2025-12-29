@@ -38,10 +38,7 @@ class _AuthorDetailsState extends State<AuthorDetails> {
             appBar: AppBar(
               title: Text(
                 author?.name ?? 'Author Details',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
               centerTitle: true,
               iconTheme: const IconThemeData(color: Colors.white),
@@ -65,10 +62,7 @@ class _AuthorDetailsState extends State<AuthorDetails> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                _openImagePreview(
-                                  context,
-                                  author?.imgURL ?? '',
-                                );
+                                _openImagePreview(context, author?.imgURL ?? '');
                               },
                               child: Hero(
                                 tag: author?.imgURL ?? '',
@@ -86,9 +80,7 @@ class _AuthorDetailsState extends State<AuthorDetails> {
                             const SizedBox(height: 26),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment:
-                                    author?.language == 'Arabic' ||
-                                        author?.language == 'Kurdish'
+                                crossAxisAlignment: author?.language == 'Arabic' || author?.language == 'Kurdish'
                                     ? CrossAxisAlignment.end
                                     : CrossAxisAlignment.start,
                                 children: [
@@ -99,22 +91,15 @@ class _AuthorDetailsState extends State<AuthorDetails> {
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
-                                    textAlign:
-                                        author?.language == 'Arabic' ||
-                                            author?.language == 'Kurdish'
+                                    textAlign: author?.language == 'Arabic' || author?.language == 'Kurdish'
                                         ? TextAlign.right
                                         : TextAlign.left,
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
                                     author?.bio ?? '',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white70,
-                                    ),
-                                    textAlign:
-                                        author?.language == 'Arabic' ||
-                                            author?.language == 'Kurdish'
+                                    style: const TextStyle(fontSize: 16, color: Colors.white70),
+                                    textAlign: author?.language == 'Arabic' || author?.language == 'Kurdish'
                                         ? TextAlign.right
                                         : TextAlign.left,
                                   ),
@@ -132,10 +117,7 @@ class _AuthorDetailsState extends State<AuthorDetails> {
                       child: Container(
                         width: double.infinity,
                         height: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[900],
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
+                        decoration: BoxDecoration(color: Colors.grey[900], borderRadius: BorderRadius.circular(8.0)),
                         child: Padding(
                           padding: const EdgeInsets.all(20),
                           child: Column(
@@ -160,47 +142,35 @@ class _AuthorDetailsState extends State<AuthorDetails> {
                                   Text(
                                     author?.language ?? '',
                                     style: TextStyle(color: Colors.white),
-                                    textAlign:
-                                        author?.language == 'Arabic' ||
-                                            author?.language == 'Kurdish'
+                                    textAlign: author?.language == 'Arabic' || author?.language == 'Kurdish'
                                         ? TextAlign.right
                                         : TextAlign.left,
                                   ),
 
                                   const SizedBox(width: 4),
 
-                                  Text(
-                                    ' * ',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                                  Text(' * ', style: TextStyle(color: Colors.white)),
 
                                   const SizedBox(width: 4),
 
                                   Text(
                                     author?.country ?? '',
                                     style: TextStyle(color: Colors.white),
-                                    textAlign:
-                                        author?.language == 'Arabic' ||
-                                            author?.language == 'Kurdish'
+                                    textAlign: author?.language == 'Arabic' || author?.language == 'Kurdish'
                                         ? TextAlign.right
                                         : TextAlign.left,
                                   ),
 
                                   const SizedBox(width: 4),
 
-                                  Text(
-                                    ' * ',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
+                                  Text(' * ', style: TextStyle(color: Colors.white)),
 
                                   const SizedBox(width: 4),
 
                                   Text(
                                     author?.dateOfBirth?.substring(0, 10) ?? '',
                                     style: TextStyle(color: Colors.white),
-                                    textAlign:
-                                        author?.language == 'Arabic' ||
-                                            author?.language == 'Kurdish'
+                                    textAlign: author?.language == 'Arabic' || author?.language == 'Kurdish'
                                         ? TextAlign.right
                                         : TextAlign.left,
                                   ),
@@ -220,11 +190,7 @@ class _AuthorDetailsState extends State<AuthorDetails> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'More Books by ${author?.name ?? ''}',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
                     ),
@@ -243,10 +209,7 @@ class _AuthorDetailsState extends State<AuthorDetails> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        BookDetails(book_id: book!.id!),
-                                  ),
+                                  MaterialPageRoute(builder: (context) => BookDetails(book_id: book!.id!)),
                                 );
                               },
                               child: ClipRRect(
@@ -291,11 +254,7 @@ void _openImagePreview(BuildContext context, String imageUrl) {
         child: Center(
           child: Hero(
             tag: imageUrl,
-            child: InteractiveViewer(
-              minScale: 1.0,
-              maxScale: 4.0,
-              child: Image.network(imageUrl),
-            ),
+            child: InteractiveViewer(minScale: 1.0, maxScale: 4.0, child: Image.network(imageUrl)),
           ),
         ),
       );

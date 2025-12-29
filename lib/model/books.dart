@@ -43,9 +43,7 @@ Future<List<Books>> fetchBooks() async {
 }
 
 Future<List<Books>> fetchBooksByPage(int page) async {
-  final res = await Dio().get(
-    'http://localhost:3000/books/getAllBooks?page=$page&limit=8',
-  );
+  final res = await Dio().get('http://localhost:3000/books/getAllBooks?page=$page&limit=8');
 
   if (res.statusCode == 200) {
     final List data = res.data['books'];
@@ -56,9 +54,7 @@ Future<List<Books>> fetchBooksByPage(int page) async {
 }
 
 Future<List<Books>> fetchRandomBooks(String genre) async {
-  final res = await Dio().get(
-    'http://localhost:3000/books/getRandomBooks?genre=$genre',
-  );
+  final res = await Dio().get('http://localhost:3000/books/getRandomBooks?genre=$genre');
 
   if (res.statusCode == 200) {
     final List data = res.data;
@@ -69,9 +65,7 @@ Future<List<Books>> fetchRandomBooks(String genre) async {
 }
 
 Future<List<Books>> getSpecifiedGenreBooks(String query) async {
-  final res = await Dio().get(
-    'http://localhost:3000/books/getAllBooks?genre=$query',
-  );
+  final res = await Dio().get('http://localhost:3000/books/getAllBooks?genre=$query');
 
   if (res.statusCode == 200) {
     final List data = res.data['books'];

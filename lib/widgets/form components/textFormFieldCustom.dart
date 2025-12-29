@@ -22,14 +22,8 @@ Widget textFormFieldCustom({
       errorMaxLines: 2,
       contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
       fillColor: Colors.deepPurple[50],
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide.none,
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide.none,
-      ),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
+      enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: const BorderSide(width: 2, color: Colors.deepPurple),

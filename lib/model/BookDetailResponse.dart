@@ -11,16 +11,9 @@ class BookDetailResponse {
   final List<Boooks?>? similarBooks;
   final List<Review?>? reviews;
 
-  BookDetailResponse({
-    this.book,
-    this.series,
-    this.seriesBooks,
-    this.similarBooks,
-    this.reviews,
-  });
+  BookDetailResponse({this.book, this.series, this.seriesBooks, this.similarBooks, this.reviews});
 
-  factory BookDetailResponse.fromJson(Map<String, dynamic> json) =>
-      _$BookDetailResponseFromJson(json);
+  factory BookDetailResponse.fromJson(Map<String, dynamic> json) => _$BookDetailResponseFromJson(json);
   Map<String, dynamic> toJson() => _$BookDetailResponseToJson(this);
 }
 
@@ -76,13 +69,7 @@ class Series {
   final String? cover_img;
   final String? description;
 
-  Series({
-    this.id,
-    this.series_title,
-    this.state,
-    this.cover_img,
-    this.description,
-  });
+  Series({this.id, this.series_title, this.state, this.cover_img, this.description});
 
   factory Series.fromJson(Map<String, dynamic> json) => _$SeriesFromJson(json);
   Map<String, dynamic> toJson() => _$SeriesToJson(this);
@@ -151,9 +138,7 @@ class Review {
 }
 
 Future<BookDetailResponse> fetchBookDetail(int bookId) async {
-  final res = await Dio().get(
-    'http://localhost:3000/books/getBookById/$bookId',
-  );
+  final res = await Dio().get('http://localhost:3000/books/getBookById/$bookId');
 
   if (res.statusCode == 200) {
     return BookDetailResponse.fromJson(res.data);

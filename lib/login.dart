@@ -36,10 +36,7 @@ class _loginscreenState extends State<loginscreen> {
     try {
       final res = await dio.post(
         '/auth/login_f',
-        data: {
-          'email': _emailController.text,
-          'password': _passwordController.text,
-        },
+        data: {'email': _emailController.text, 'password': _passwordController.text},
       );
 
       if (res.statusCode == 200) {
@@ -48,9 +45,7 @@ class _loginscreenState extends State<loginscreen> {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Login Successful'),
-            content: Text(
-              res.data['message'] ?? 'You have logged in successfully.',
-            ),
+            content: Text(res.data['message'] ?? 'You have logged in successfully.'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -86,12 +81,7 @@ class _loginscreenState extends State<loginscreen> {
         builder: (context) => AlertDialog(
           title: const Text('Login Failed'),
           content: Text(errorMsg),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
-          ],
+          actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK'))],
         ),
       );
     }
@@ -119,11 +109,7 @@ class _loginscreenState extends State<loginscreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: const Text(
                     'Login Here',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple,
-                    ),
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.deepPurple),
                   ),
                 ),
                 SizedBox(height: 50),
@@ -131,11 +117,7 @@ class _loginscreenState extends State<loginscreen> {
                   'welcome back, you have \nbeen missed!',
                   maxLines: 2,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
 
                 SizedBox(height: 50),
@@ -154,9 +136,7 @@ class _loginscreenState extends State<loginscreen> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';
-                            } else if (!RegExp(
-                              r'^[^@]+@[^@]+\.[^@]+',
-                            ).hasMatch(value)) {
+                            } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                               return 'Please enter a valid email address';
                             }
                             return null;
@@ -208,13 +188,8 @@ class _loginscreenState extends State<loginscreen> {
                             _submitLogin();
                           },
                           style: ElevatedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 100,
-                              vertical: 15,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                             backgroundColor: Colors.deepPurple,
                             shadowColor: Colors.deepPurpleAccent,
                             elevation: 5,
@@ -228,11 +203,7 @@ class _loginscreenState extends State<loginscreen> {
                               children: const [
                                 Text(
                                   'Login',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
@@ -243,27 +214,9 @@ class _loginscreenState extends State<loginscreen> {
 
                         Row(
                           children: [
-                            Expanded(
-                              child: Divider(
-                                color: Colors.grey[400],
-                                thickness: 1,
-                                endIndent: 10,
-                              ),
-                            ),
-                            Text(
-                              'or continue with',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                color: Colors.grey[400],
-                                thickness: 1,
-                                indent: 10,
-                              ),
-                            ),
+                            Expanded(child: Divider(color: Colors.grey[400], thickness: 1, endIndent: 10)),
+                            Text('or continue with', style: TextStyle(fontSize: 16, color: Colors.grey[600])),
+                            Expanded(child: Divider(color: Colors.grey[400], thickness: 1, indent: 10)),
                           ],
                         ),
 
@@ -283,13 +236,7 @@ class _loginscreenState extends State<loginscreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              'Not a member?',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey[700],
-                              ),
-                            ),
+                            Text('Not a member?', style: TextStyle(fontSize: 16, color: Colors.grey[700])),
                             SizedBox(width: 5),
                             InkWell(
                               onTap: () {

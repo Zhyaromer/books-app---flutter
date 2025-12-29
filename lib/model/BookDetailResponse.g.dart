@@ -6,45 +6,29 @@ part of 'BookDetailResponse.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BookDetailResponse _$BookDetailResponseFromJson(Map<String, dynamic> json) =>
-    BookDetailResponse(
-      book: json['book'] == null
-          ? null
-          : Book.fromJson(json['book'] as Map<String, dynamic>),
-      series: (json['series'] as List<dynamic>?)
-          ?.map(
-            (e) =>
-                e == null ? null : Series.fromJson(e as Map<String, dynamic>),
-          )
-          .toList(),
-      seriesBooks: (json['seriesBooks'] as List<dynamic>?)
-          ?.map(
-            (e) =>
-                e == null ? null : Boooks.fromJson(e as Map<String, dynamic>),
-          )
-          .toList(),
-      similarBooks: (json['similarBooks'] as List<dynamic>?)
-          ?.map(
-            (e) =>
-                e == null ? null : Boooks.fromJson(e as Map<String, dynamic>),
-          )
-          .toList(),
-      reviews: (json['reviews'] as List<dynamic>?)
-          ?.map(
-            (e) =>
-                e == null ? null : Review.fromJson(e as Map<String, dynamic>),
-          )
-          .toList(),
-    );
+BookDetailResponse _$BookDetailResponseFromJson(Map<String, dynamic> json) => BookDetailResponse(
+  book: json['book'] == null ? null : Book.fromJson(json['book'] as Map<String, dynamic>),
+  series: (json['series'] as List<dynamic>?)
+      ?.map((e) => e == null ? null : Series.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  seriesBooks: (json['seriesBooks'] as List<dynamic>?)
+      ?.map((e) => e == null ? null : Boooks.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  similarBooks: (json['similarBooks'] as List<dynamic>?)
+      ?.map((e) => e == null ? null : Boooks.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  reviews: (json['reviews'] as List<dynamic>?)
+      ?.map((e) => e == null ? null : Review.fromJson(e as Map<String, dynamic>))
+      .toList(),
+);
 
-Map<String, dynamic> _$BookDetailResponseToJson(BookDetailResponse instance) =>
-    <String, dynamic>{
-      'book': instance.book,
-      'series': instance.series,
-      'seriesBooks': instance.seriesBooks,
-      'similarBooks': instance.similarBooks,
-      'reviews': instance.reviews,
-    };
+Map<String, dynamic> _$BookDetailResponseToJson(BookDetailResponse instance) => <String, dynamic>{
+  'book': instance.book,
+  'series': instance.series,
+  'seriesBooks': instance.seriesBooks,
+  'similarBooks': instance.similarBooks,
+  'reviews': instance.reviews,
+};
 
 Book _$BookFromJson(Map<String, dynamic> json) => Book(
   id: (json['id'] as num?)?.toInt(),

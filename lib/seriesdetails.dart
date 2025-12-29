@@ -29,10 +29,7 @@ class _seriesdetailsState extends State<seriesdetails> {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(
-            child: Text(
-              'Error: ${snapshot.error}',
-              style: const TextStyle(color: Colors.red),
-            ),
+            child: Text('Error: ${snapshot.error}', style: const TextStyle(color: Colors.red)),
           );
         } else if (!snapshot.hasData || snapshot.data == null) {
           return const Center(child: Text('No data available'));
@@ -47,10 +44,7 @@ class _seriesdetailsState extends State<seriesdetails> {
             centerTitle: true,
             title: Text(
               series.series_title ?? 'Series Details',
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             backgroundColor: const Color(0xFF1F1F1F),
           ),
@@ -65,12 +59,7 @@ class _seriesdetailsState extends State<seriesdetails> {
                     Center(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          series.cover_img!,
-                          height: 300,
-                          fit: BoxFit.fill,
-                          width: double.infinity,
-                        ),
+                        child: Image.network(series.cover_img!, height: 300, fit: BoxFit.fill, width: double.infinity),
                       ),
                     ),
                   const SizedBox(height: 20),
@@ -80,28 +69,15 @@ class _seriesdetailsState extends State<seriesdetails> {
                     children: [
                       Text(
                         series.series_title ?? 'No Title',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
 
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.blueGrey,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(color: Colors.blueGrey, borderRadius: BorderRadius.circular(20)),
                         child: Text(
                           series.state ?? 'Unknown',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -115,11 +91,7 @@ class _seriesdetailsState extends State<seriesdetails> {
                   const SizedBox(height: 20),
                   Text(
                     'Books in this Series - ${series.books?.length ?? 0}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                   const SizedBox(height: 10),
                   GridView.builder(
@@ -139,11 +111,7 @@ class _seriesdetailsState extends State<seriesdetails> {
                           color: Colors.grey[900],
                           borderRadius: BorderRadius.circular(8.0),
                           boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(3, 3),
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 5,
-                            ),
+                            BoxShadow(offset: const Offset(3, 3), color: Colors.black.withOpacity(0.3), blurRadius: 5),
                           ],
                         ),
                         child: InkWell(
@@ -174,12 +142,10 @@ class _seriesdetailsState extends State<seriesdetails> {
                                 const SizedBox(width: 10),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             book.title ?? 'No Title',
@@ -192,21 +158,14 @@ class _seriesdetailsState extends State<seriesdetails> {
                                           ),
 
                                           Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 10,
-                                              vertical: 4,
-                                            ),
+                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                             decoration: BoxDecoration(
                                               color: Colors.teal,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
+                                              borderRadius: BorderRadius.circular(20),
                                             ),
                                             child: Text(
                                               (index + 1).toString(),
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                             ),
                                           ),
                                         ],
@@ -218,21 +177,11 @@ class _seriesdetailsState extends State<seriesdetails> {
                                         children: [
                                           Row(
                                             children: [
-                                              const Icon(
-                                                Icons.calendar_today,
-                                                color: Colors.white70,
-                                                size: 14,
-                                              ),
+                                              const Icon(Icons.calendar_today, color: Colors.white70, size: 14),
                                               const SizedBox(width: 5),
                                               Text(
-                                                book.published_date?.substring(
-                                                      0,
-                                                      10,
-                                                    ) ??
-                                                    'Unknown',
-                                                style: const TextStyle(
-                                                  color: Colors.white70,
-                                                ),
+                                                book.published_date?.substring(0, 10) ?? 'Unknown',
+                                                style: const TextStyle(color: Colors.white70),
                                               ),
                                             ],
                                           ),
@@ -241,17 +190,11 @@ class _seriesdetailsState extends State<seriesdetails> {
 
                                           Row(
                                             children: [
-                                              const Icon(
-                                                Icons.category,
-                                                color: Colors.white70,
-                                                size: 14,
-                                              ),
+                                              const Icon(Icons.category, color: Colors.white70, size: 14),
                                               const SizedBox(width: 5),
                                               Text(
                                                 book.genre ?? 'Unknown',
-                                                style: const TextStyle(
-                                                  color: Colors.white70,
-                                                ),
+                                                style: const TextStyle(color: Colors.white70),
                                               ),
                                             ],
                                           ),
@@ -260,17 +203,11 @@ class _seriesdetailsState extends State<seriesdetails> {
 
                                           Row(
                                             children: [
-                                              const Icon(
-                                                Icons.menu_book,
-                                                color: Colors.white70,
-                                                size: 14,
-                                              ),
+                                              const Icon(Icons.menu_book, color: Colors.white70, size: 14),
                                               const SizedBox(width: 5),
                                               Text(
                                                 book.page_count.toString(),
-                                                style: const TextStyle(
-                                                  color: Colors.white70,
-                                                ),
+                                                style: const TextStyle(color: Colors.white70),
                                               ),
                                             ],
                                           ),
@@ -282,9 +219,7 @@ class _seriesdetailsState extends State<seriesdetails> {
                                       Expanded(
                                         child: Text(
                                           book.description ?? 'No Description',
-                                          style: const TextStyle(
-                                            color: Colors.white70,
-                                          ),
+                                          style: const TextStyle(color: Colors.white70),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 3,
                                         ),

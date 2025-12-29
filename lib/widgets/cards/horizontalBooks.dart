@@ -19,20 +19,13 @@ Widget horizontalBooks(
             alignment: Alignment.centerLeft,
             child: Text(
               Title,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
 
           Align(
             alignment: Alignment.centerLeft,
-            child: Text(
-              description,
-              style: TextStyle(color: Colors.white70, fontSize: 14),
-            ),
+            child: Text(description, style: TextStyle(color: Colors.white70, fontSize: 14)),
           ),
 
           SizedBox(height: 16),
@@ -58,20 +51,14 @@ Widget horizontalBooks(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  BookDetails(book_id: book.id),
-                            ),
+                            MaterialPageRoute(builder: (context) => BookDetails(book_id: book.id)),
                           );
                         },
                         child: Container(
                           width: 150,
                           margin: EdgeInsets.only(right: 16.0),
                           decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(book.cover_image),
-                              fit: BoxFit.fill,
-                            ),
+                            image: DecorationImage(image: NetworkImage(book.cover_image), fit: BoxFit.fill),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),

@@ -4,12 +4,7 @@ import 'package:books_app__flutter/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(
-    MaterialApp(
-      home: const BookLibraryApp(),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
+  runApp(MaterialApp(home: const BookLibraryApp(), debugShowCheckedModeBanner: false));
 }
 
 class startscreen extends StatefulWidget {
@@ -28,10 +23,7 @@ class _startscreenState extends State<startscreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/images/undraw_book-lover_m9n3.png',
-              height: 550,
-            ),
+            Image.asset('assets/images/undraw_book-lover_m9n3.png', height: 550),
             const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -41,20 +33,13 @@ class _startscreenState extends State<startscreen> {
                 textAlign: TextAlign.center,
                 softWrap: true,
                 overflow: TextOverflow.visible,
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple,
-                ),
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.deepPurple),
               ),
             ),
 
             const SizedBox(height: 20),
 
-            Text(
-              'Your gateway to a world of books!',
-              style: TextStyle(fontSize: 20, color: Colors.grey[900]),
-            ),
+            Text('Your gateway to a world of books!', style: TextStyle(fontSize: 20, color: Colors.grey[900])),
 
             const SizedBox(height: 70),
 
@@ -73,13 +58,8 @@ class _startscreenState extends State<startscreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 15,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     backgroundColor: Colors.deepPurple,
                     shadowColor: Colors.deepPurpleAccent,
                     elevation: 5,
@@ -93,11 +73,7 @@ class _startscreenState extends State<startscreen> {
                       children: [
                         const Text(
                           'Login',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 10),
                         const Icon(Icons.login, color: Colors.white, size: 24),
@@ -120,13 +96,8 @@ class _startscreenState extends State<startscreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 40,
-                      vertical: 15,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
 
                     backgroundColor: Colors.grey[100],
                     shadowColor: Colors.grey,
@@ -141,18 +112,10 @@ class _startscreenState extends State<startscreen> {
                       children: [
                         const Text(
                           'Signup',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(width: 10),
-                        const Icon(
-                          Icons.person_add,
-                          color: Colors.black,
-                          size: 24,
-                        ),
+                        const Icon(Icons.person_add, color: Colors.black, size: 24),
                       ],
                     ),
                   ),

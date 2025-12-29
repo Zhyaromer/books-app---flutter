@@ -86,28 +86,18 @@ class _DiscoverState extends State<Discover> {
           builder: (context, setDialogState) {
             return AlertDialog(
               backgroundColor: const Color(0xFF1F1F1F),
-              title: const Text(
-                'Filter Options',
-                style: TextStyle(color: Colors.white),
-              ),
+              title: const Text('Filter Options', style: TextStyle(color: Colors.white)),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     'Language',
-                    style: TextStyle(
-                      color: Colors.white70,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(color: Colors.white70, fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 12),
                   RadioListTile<String?>(
-                    title: const Text(
-                      'All Languages',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    title: const Text('All Languages', style: TextStyle(color: Colors.white)),
                     value: null,
                     groupValue: selectedLanguage,
                     activeColor: Colors.white,
@@ -118,10 +108,7 @@ class _DiscoverState extends State<Discover> {
                     },
                   ),
                   RadioListTile<String?>(
-                    title: const Text(
-                      'Kurdish',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    title: const Text('Kurdish', style: TextStyle(color: Colors.white)),
                     value: 'Kurdish',
                     groupValue: selectedLanguage,
                     activeColor: Colors.white,
@@ -132,10 +119,7 @@ class _DiscoverState extends State<Discover> {
                     },
                   ),
                   RadioListTile<String?>(
-                    title: const Text(
-                      'English',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    title: const Text('English', style: TextStyle(color: Colors.white)),
                     value: 'English',
                     groupValue: selectedLanguage,
                     activeColor: Colors.white,
@@ -146,10 +130,7 @@ class _DiscoverState extends State<Discover> {
                     },
                   ),
                   RadioListTile<String?>(
-                    title: const Text(
-                      'Arabic',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    title: const Text('Arabic', style: TextStyle(color: Colors.white)),
                     value: 'Arabic',
                     groupValue: selectedLanguage,
                     activeColor: Colors.white,
@@ -169,20 +150,14 @@ class _DiscoverState extends State<Discover> {
                     });
                     Navigator.of(context).pop();
                   },
-                  child: const Text(
-                    'Clear',
-                    style: TextStyle(color: Colors.white70),
-                  ),
+                  child: const Text('Clear', style: TextStyle(color: Colors.white70)),
                 ),
                 TextButton(
                   onPressed: () {
                     setState(() {});
                     Navigator.of(context).pop();
                   },
-                  child: const Text(
-                    'Apply',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  child: const Text('Apply', style: TextStyle(color: Colors.white)),
                 ),
               ],
             );
@@ -219,15 +194,9 @@ class _DiscoverState extends State<Discover> {
                       hintText: 'Search',
                       prefixIcon: const Icon(Icons.search),
                       suffixIcon: _searchController.text.isNotEmpty
-                          ? IconButton(
-                              icon: const Icon(Icons.clear),
-                              onPressed: _searchController.clear,
-                            )
+                          ? IconButton(icon: const Icon(Icons.clear), onPressed: _searchController.clear)
                           : null,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide.none,
-                      ),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(30), borderSide: BorderSide.none),
                       filled: true,
                       fillColor: Colors.white,
                     ),
@@ -247,9 +216,7 @@ class _DiscoverState extends State<Discover> {
                           text: TextSpan(
                             text: types[index],
                             style: TextStyle(
-                              fontWeight: isSelected
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
+                              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                               fontSize: 14,
                             ),
                           ),
@@ -261,29 +228,20 @@ class _DiscoverState extends State<Discover> {
                           onTap: () {
                             setState(() {
                               selectedIndex = index;
-                              booksFuture = getSpecifiedGenreBooks(
-                                types[selectedIndex],
-                              );
+                              booksFuture = getSpecifiedGenreBooks(types[selectedIndex]);
                             });
                           },
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 8),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 6,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   types[index],
                                   style: TextStyle(
-                                    color: isSelected
-                                        ? Colors.white
-                                        : Colors.white70,
-                                    fontWeight: isSelected
-                                        ? FontWeight.bold
-                                        : FontWeight.normal,
+                                    color: isSelected ? Colors.white : Colors.white70,
+                                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                                   ),
                                 ),
                                 const SizedBox(height: 4),
@@ -313,15 +271,10 @@ class _DiscoverState extends State<Discover> {
               future: booksFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  );
+                  return Center(child: CircularProgressIndicator(color: Colors.white));
                 } else if (snapshot.hasError) {
                   return Center(
-                    child: Text(
-                      'Error: ${snapshot.error}',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    child: Text('Error: ${snapshot.error}', style: TextStyle(color: Colors.white)),
                   );
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return Expanded(
@@ -329,10 +282,7 @@ class _DiscoverState extends State<Discover> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'No books found',
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
+                          Text('No books found', style: TextStyle(color: Colors.white, fontSize: 18)),
 
                           SizedBox(height: 22),
 
@@ -341,18 +291,11 @@ class _DiscoverState extends State<Discover> {
                               onPressed: () {
                                 setState(() {
                                   _searchController.clear();
-                                  booksFuture = getSpecifiedGenreBooks(
-                                    types[selectedIndex],
-                                  );
+                                  booksFuture = getSpecifiedGenreBooks(types[selectedIndex]);
                                 });
                               },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.deepPurpleAccent,
-                              ),
-                              child: const Text(
-                                'Clear Search',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                              style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurpleAccent),
+                              child: const Text('Clear Search', style: TextStyle(color: Colors.white)),
                             ),
                         ],
                       ),
@@ -362,9 +305,7 @@ class _DiscoverState extends State<Discover> {
                   var book = snapshot.data!;
 
                   if (selectedLanguage != null) {
-                    book = book
-                        .where((b) => b.language == selectedLanguage)
-                        .toList();
+                    book = book.where((b) => b.language == selectedLanguage).toList();
                   }
 
                   return Column(
@@ -377,22 +318,14 @@ class _DiscoverState extends State<Discover> {
                           children: [
                             Text(
                               '${book.length} Books Found',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                             ),
 
                             IconButton(
                               onPressed: () {
                                 openFilterDialog();
                               },
-                              icon: Icon(
-                                Icons.filter_alt_rounded,
-                                color: Colors.white,
-                                size: 24,
-                              ),
+                              icon: Icon(Icons.filter_alt_rounded, color: Colors.white, size: 24),
                             ),
                           ],
                         ),
@@ -406,17 +339,11 @@ class _DiscoverState extends State<Discover> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(
-                                      Icons.menu_book,
-                                      color: Colors.white54,
-                                      size: 48,
-                                    ),
+                                    Icon(Icons.menu_book, color: Colors.white54, size: 48),
                                     const SizedBox(height: 12),
                                     Text(
                                       'No books found for $selectedLanguage language',
-                                      style: const TextStyle(
-                                        color: Colors.white70,
-                                      ),
+                                      style: const TextStyle(color: Colors.white70),
                                       textAlign: TextAlign.center,
                                     ),
 
@@ -428,14 +355,8 @@ class _DiscoverState extends State<Discover> {
                                           selectedLanguage = null;
                                         });
                                       },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            Colors.deepPurpleAccent,
-                                      ),
-                                      child: const Text(
-                                        'Clear Filter',
-                                        style: TextStyle(color: Colors.white),
-                                      ),
+                                      style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurpleAccent),
+                                      child: const Text('Clear Filter', style: TextStyle(color: Colors.white)),
                                     ),
                                   ],
                                 ),
@@ -447,40 +368,28 @@ class _DiscoverState extends State<Discover> {
                                 itemCount: book.length,
                                 itemBuilder: (context, index) {
                                   return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 6,
-                                    ),
+                                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                                     child: InkWell(
                                       onTap: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) => BookDetails(
-                                              book_id: book[index].id,
-                                            ),
-                                          ),
+                                          MaterialPageRoute(builder: (context) => BookDetails(book_id: book[index].id)),
                                         );
                                       },
                                       child: Container(
                                         height: 200,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
+                                          borderRadius: BorderRadius.circular(12),
                                           color: const Color(0xFF1F1F1F),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
+                                                borderRadius: BorderRadius.circular(4),
                                                 child: Image.network(
                                                   book[index].cover_image,
                                                   height: 180,
@@ -493,48 +402,31 @@ class _DiscoverState extends State<Discover> {
 
                                               Expanded(
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      textBaseline: TextBaseline
-                                                          .alphabetic,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      textBaseline: TextBaseline.alphabetic,
                                                       children: [
                                                         Text(
-                                                          (index + 1)
-                                                              .toString(),
-                                                          style:
-                                                              GoogleFonts.montserrat(
-                                                                fontSize: 28,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
+                                                          (index + 1).toString(),
+                                                          style: GoogleFonts.montserrat(
+                                                            fontSize: 28,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Colors.white,
+                                                          ),
                                                         ),
-                                                        const SizedBox(
-                                                          width: 8,
-                                                        ),
+                                                        const SizedBox(width: 8),
                                                         Expanded(
                                                           child: Text(
                                                             book[index].title,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
+                                                            overflow: TextOverflow.ellipsis,
                                                             maxLines: 2,
-                                                            style:
-                                                                const TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
+                                                            style: const TextStyle(
+                                                              color: Colors.white,
+                                                              fontSize: 16,
+                                                              fontWeight: FontWeight.bold,
+                                                            ),
                                                           ),
                                                         ),
                                                       ],
@@ -544,10 +436,7 @@ class _DiscoverState extends State<Discover> {
 
                                                     Text(
                                                       book[index].name,
-                                                      style: const TextStyle(
-                                                        color: Colors.white70,
-                                                        fontSize: 14,
-                                                      ),
+                                                      style: const TextStyle(color: Colors.white70, fontSize: 14),
                                                     ),
 
                                                     const SizedBox(height: 12),
@@ -556,82 +445,46 @@ class _DiscoverState extends State<Discover> {
                                                       children: [
                                                         Row(
                                                           children: [
-                                                            Icon(
-                                                              Icons.book,
-                                                              color: Colors
-                                                                  .white70,
-                                                              size: 16,
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 4,
-                                                            ),
+                                                            Icon(Icons.book, color: Colors.white70, size: 16),
+                                                            const SizedBox(width: 4),
                                                             Text(
                                                               '${book[index].page_count} pages',
-                                                              style:
-                                                                  const TextStyle(
-                                                                    color: Colors
-                                                                        .white70,
-                                                                    fontSize:
-                                                                        12,
-                                                                  ),
+                                                              style: const TextStyle(
+                                                                color: Colors.white70,
+                                                                fontSize: 12,
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
 
-                                                        const SizedBox(
-                                                          width: 12,
-                                                        ),
+                                                        const SizedBox(width: 12),
 
                                                         Row(
                                                           children: [
-                                                            Icon(
-                                                              Icons.language,
-                                                              color: Colors
-                                                                  .white70,
-                                                              size: 16,
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 4,
-                                                            ),
+                                                            Icon(Icons.language, color: Colors.white70, size: 16),
+                                                            const SizedBox(width: 4),
                                                             Text(
-                                                              book[index]
-                                                                  .language,
-                                                              style:
-                                                                  const TextStyle(
-                                                                    color: Colors
-                                                                        .white70,
-                                                                    fontSize:
-                                                                        12,
-                                                                  ),
+                                                              book[index].language,
+                                                              style: const TextStyle(
+                                                                color: Colors.white70,
+                                                                fontSize: 12,
+                                                              ),
                                                             ),
                                                           ],
                                                         ),
 
-                                                        const SizedBox(
-                                                          width: 12,
-                                                        ),
+                                                        const SizedBox(width: 12),
 
                                                         Row(
                                                           children: [
-                                                            Icon(
-                                                              Icons.language,
-                                                              color: Colors
-                                                                  .white70,
-                                                              size: 16,
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 4,
-                                                            ),
+                                                            Icon(Icons.language, color: Colors.white70, size: 16),
+                                                            const SizedBox(width: 4),
                                                             Text(
-                                                              book[index]
-                                                                  .language,
-                                                              style:
-                                                                  const TextStyle(
-                                                                    color: Colors
-                                                                        .white70,
-                                                                    fontSize:
-                                                                        12,
-                                                                  ),
+                                                              book[index].language,
+                                                              style: const TextStyle(
+                                                                color: Colors.white70,
+                                                                fontSize: 12,
+                                                              ),
                                                             ),
                                                           ],
                                                         ),

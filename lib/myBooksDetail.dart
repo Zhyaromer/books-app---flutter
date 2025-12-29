@@ -80,10 +80,7 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                     hintStyle: TextStyle(color: Colors.grey),
                     filled: true,
                     fillColor: Color(0xFF2C2C2C),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide.none,
-                    ),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
                     prefixIcon: Icon(Icons.search, color: Colors.grey),
                   ),
                   onChanged: (value) {
@@ -91,12 +88,8 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                       books = cacheBooks
                           .where(
                             (book) =>
-                                book.title.toLowerCase().contains(
-                                  value.toLowerCase(),
-                                ) ||
-                                book.name.toLowerCase().contains(
-                                  value.toLowerCase(),
-                                ),
+                                book.title.toLowerCase().contains(value.toLowerCase()) ||
+                                book.name.toLowerCase().contains(value.toLowerCase()),
                           )
                           .toList();
                     });
@@ -113,10 +106,7 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      '${books.length} Books',
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    child: Text('${books.length} Books', style: TextStyle(color: Colors.white)),
                   ),
                 ),
                 SizedBox(width: 6),
@@ -139,10 +129,7 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                         ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
-                            child: Text(
-                              value,
-                              style: TextStyle(color: Colors.white),
-                            ),
+                            child: Text(value, style: TextStyle(color: Colors.white)),
                           );
                         }).toList(),
                     onChanged: changeSort,
@@ -157,10 +144,7 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'No books found.',
-                            style: TextStyle(color: Colors.grey, fontSize: 16),
-                          ),
+                          Text('No books found.', style: TextStyle(color: Colors.grey, fontSize: 16)),
 
                           SizedBox(height: 24),
 
@@ -185,25 +169,13 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                                 padding: EdgeInsets.symmetric(vertical: 8),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                ),
+                                padding: const EdgeInsets.symmetric(vertical: 8),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
-                                      Icons.clear,
-                                      color: Colors.white,
-                                      size: 16,
-                                    ),
+                                    Icon(Icons.clear, color: Colors.white, size: 16),
                                     SizedBox(width: 8),
-                                    Text(
-                                      'Clear Search',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
+                                    Text('Clear Search', style: TextStyle(color: Colors.white, fontSize: 16)),
                                   ],
                                 ),
                               ),
@@ -220,10 +192,7 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    BookDetails(book_id: book.id),
-                              ),
+                              MaterialPageRoute(builder: (context) => BookDetails(book_id: book.id)),
                             );
                           },
                           child: Padding(
@@ -242,55 +211,36 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                                       topLeft: Radius.circular(8),
                                       bottomLeft: Radius.circular(8),
                                     ),
-                                    child: Image.network(
-                                      book.coverImage,
-                                      width: 125,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                    ),
+                                    child: Image.network(book.coverImage, width: 125, height: 200, fit: BoxFit.cover),
                                   ),
                                   const SizedBox(width: 16),
                                   Expanded(
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 8,
-                                      ),
+                                      padding: const EdgeInsets.symmetric(vertical: 8),
                                       child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 book.title,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 22,
-                                                ),
+                                                style: const TextStyle(color: Colors.white, fontSize: 22),
                                               ),
                                               SizedBox(height: 8),
                                               Text(
                                                 book.name,
-                                                style: TextStyle(
-                                                  color: Colors.grey.shade300,
-                                                  fontSize: 14,
-                                                ),
+                                                style: TextStyle(color: Colors.grey.shade300, fontSize: 14),
                                               ),
 
                                               SizedBox(height: 8),
 
                                               Text(
                                                 book.description,
-                                                maxLines: 4,
+                                                maxLines: 3,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 14,
-                                                ),
+                                                style: const TextStyle(color: Colors.grey, fontSize: 14),
                                               ),
                                             ],
                                           ),
@@ -298,21 +248,14 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                                           SizedBox(height: 20),
 
                                           Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 8,
-                                              vertical: 4,
-                                            ),
+                                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                             decoration: BoxDecoration(
                                               color: Colors.blueGrey,
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
+                                              borderRadius: BorderRadius.circular(12),
                                             ),
                                             child: Text(
                                               book.genre,
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12,
-                                              ),
+                                              style: TextStyle(color: Colors.white, fontSize: 12),
                                             ),
                                           ),
                                         ],

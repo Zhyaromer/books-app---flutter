@@ -1,3 +1,5 @@
+import 'package:books_app__flutter/model/BookDetailResponse.dart';
+
 enum ReadingStatus { wantToRead, currentlyReading, finished, didNotFinish }
 
 class ReadingStatusItem {
@@ -10,19 +12,10 @@ class ReadingStatusItem {
 }
 
 final List<ReadingStatusItem> defaultStatuses = [
-  const ReadingStatusItem(
-    enumValue: ReadingStatus.wantToRead,
-    label: 'Want To Read',
-  ),
-  const ReadingStatusItem(
-    enumValue: ReadingStatus.currentlyReading,
-    label: 'Currently Reading',
-  ),
+  const ReadingStatusItem(enumValue: ReadingStatus.wantToRead, label: 'Want To Read'),
+  const ReadingStatusItem(enumValue: ReadingStatus.currentlyReading, label: 'Currently Reading'),
   const ReadingStatusItem(enumValue: ReadingStatus.finished, label: 'Finished'),
-  const ReadingStatusItem(
-    enumValue: ReadingStatus.didNotFinish,
-    label: 'Did Not Finish',
-  ),
+  const ReadingStatusItem(enumValue: ReadingStatus.didNotFinish, label: 'Did Not Finish'),
 ];
 
 final List<ReadingStatusItem> customStatuses = [];
@@ -31,20 +24,14 @@ void addCustomStatus(String label) {
   final trimmed = label.trim();
   if (trimmed.isEmpty) return;
 
-  final exists = [
-    ...defaultStatuses,
-    ...customStatuses,
-  ].any((s) => s.label.toLowerCase() == trimmed.toLowerCase());
+  final exists = [...defaultStatuses, ...customStatuses].any((s) => s.label.toLowerCase() == trimmed.toLowerCase());
 
   if (exists) return;
 
   customStatuses.add(ReadingStatusItem(label: trimmed));
 }
 
-List<ReadingStatusItem> get allStatuses => [
-  ...defaultStatuses,
-  ...customStatuses,
-];
+List<ReadingStatusItem> get allStatuses => [...defaultStatuses, ...customStatuses];
 
 class ReadingStatusList {
   final int id;
@@ -100,6 +87,54 @@ List<ReadingStatusList> allBooksForStatus(String statusLabel) {
   return booksList.where((book) => book.status.label == statusLabel).toList();
 }
 
+List<ReadingStatusItem> allStatusesList() {
+  return allStatuses;
+}
+
+String getSelectedStatusLabel(int bookdId) {
+  bool isBookFound = booksList.any((book) => book.id == bookdId);
+  if (isBookFound) {
+    String selectedLabel = booksList.firstWhere((book) => book.id == bookdId).status.label;
+    return selectedLabel;
+  } else {
+    return 'Want To Read';
+  }
+}
+
+bool addOrUpdateBookStatus(int bookId, String status, Book book) {
+  int existingIndex = booksList.indexWhere((b) => b.id == bookId);
+  if (existingIndex != -1) {
+    final book = booksList[existingIndex];
+    booksList[existingIndex] = ReadingStatusList(
+      id: bookId,
+      title: book.title,
+      name: book.name,
+      description: book.description,
+      status: allStatuses.firstWhere((s) => s.label == status, orElse: () => allStatuses[0]),
+      coverImage: book.coverImage,
+      genre: book.genre,
+      addedDate: book.addedDate,
+      page_count: book.page_count,
+    );
+    return true;
+  } else {
+    booksList.add(
+      ReadingStatusList(
+        id: bookId,
+        title: book.title ?? '',
+        name: book.name ?? '',
+        description: book.description ?? '',
+        status: allStatuses.firstWhere((s) => s.label == status, orElse: () => allStatuses[0]),
+        coverImage: book.cover_image ?? '',
+        genre: book.genre ?? '',
+        addedDate: DateTime.now(),
+        page_count: book.page_count ?? 0,
+      ),
+    );
+    return false;
+  }
+}
+
 final List<ReadingStatusList> booksList = [
   ReadingStatusList(
     id: 1,
@@ -108,8 +143,7 @@ final List<ReadingStatusList> booksList = [
     description:
         'The Great Gatsby is a 1925 tragedy novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, near New York City',
     status: allStatuses[0],
-    coverImage:
-        'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale/jackets/9781408855652.jpg',
+    coverImage: 'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale/jackets/9781408855652.jpg',
     genre: 'Classic',
     addedDate: DateTime(2023, 10, 5),
     page_count: 222,
@@ -121,8 +155,7 @@ final List<ReadingStatusList> booksList = [
     description:
         'The Great Gatsby is a 1925 tragedy novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, near New York City',
     status: allStatuses[0],
-    coverImage:
-        'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale/jackets/9781408855652.jpg',
+    coverImage: 'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale/jackets/9781408855652.jpg',
     genre: 'Classic',
     addedDate: DateTime(2023, 10, 6),
     page_count: 213,
@@ -134,8 +167,7 @@ final List<ReadingStatusList> booksList = [
     description:
         'The Great Gatsby is a 1925 tragedy novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, near New York City',
     status: allStatuses[0],
-    coverImage:
-        'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale/jackets/9781408855652.jpg',
+    coverImage: 'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_568,c_scale/jackets/9781408855652.jpg',
     genre: 'Classic',
     addedDate: DateTime(2023, 10, 7),
     page_count: 250,
@@ -146,8 +178,7 @@ final List<ReadingStatusList> booksList = [
     name: 'George Orwell',
     description: 'A dystopian novel about totalitarianism.',
     status: allStatuses[1],
-    coverImage:
-        'https://mir-s3-cdn-cf.behance.net/project_modules/1400/b468d093312907.5e6139cf2ab03.png',
+    coverImage: 'https://mir-s3-cdn-cf.behance.net/project_modules/1400/b468d093312907.5e6139cf2ab03.png',
     genre: 'Dystopian',
     addedDate: DateTime(2023, 11, 12),
     page_count: 328,

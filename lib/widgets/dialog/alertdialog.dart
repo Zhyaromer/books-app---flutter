@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-Future<dynamic> showdialog({
-  required BuildContext context,
-  required String messege,
-}) {
+Future<dynamic> showdialog({required BuildContext context, required String messege}) {
   return showDialog(
     context: context,
     builder: (context) {

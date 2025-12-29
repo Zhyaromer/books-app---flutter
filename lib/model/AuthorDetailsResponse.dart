@@ -10,8 +10,7 @@ class AuthorDetailsResponse {
 
   AuthorDetailsResponse({this.author, this.books});
 
-  factory AuthorDetailsResponse.fromJson(Map<String, dynamic> json) =>
-      _$AuthorDetailsResponseFromJson(json);
+  factory AuthorDetailsResponse.fromJson(Map<String, dynamic> json) => _$AuthorDetailsResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthorDetailsResponseToJson(this);
 }
@@ -25,8 +24,7 @@ class AuthorBooks {
 
   AuthorBooks({this.id, this.coverImage});
 
-  factory AuthorBooks.fromJson(Map<String, dynamic> json) =>
-      _$AuthorBooksFromJson(json);
+  factory AuthorBooks.fromJson(Map<String, dynamic> json) => _$AuthorBooksFromJson(json);
 
   Map<String, dynamic> toJson() => _$AuthorBooksToJson(this);
 }
@@ -41,15 +39,7 @@ class Author {
   final String? dateOfBirth;
   final String? country;
 
-  Author({
-    this.id,
-    this.name,
-    this.bio,
-    this.imgURL,
-    this.language,
-    this.dateOfBirth,
-    this.country,
-  });
+  Author({this.id, this.name, this.bio, this.imgURL, this.language, this.dateOfBirth, this.country});
 
   factory Author.fromJson(Map<String, dynamic> json) => _$AuthorFromJson(json);
 
@@ -57,9 +47,7 @@ class Author {
 }
 
 Future<AuthorDetailsResponse> fetchAuthorDetail(int authorId) async {
-  final res = await Dio().get(
-    'http://localhost:3000/authors/getAuthorById/$authorId',
-  );
+  final res = await Dio().get('http://localhost:3000/authors/getAuthorById/$authorId');
 
   if (res.statusCode == 200) {
     return AuthorDetailsResponse.fromJson(res.data);

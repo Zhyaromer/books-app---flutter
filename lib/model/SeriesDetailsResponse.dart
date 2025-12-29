@@ -11,17 +11,9 @@ class SeriesDetailsResponse {
   final String? description;
   final List<BooksInSeries>? books;
 
-  SeriesDetailsResponse({
-    this.id,
-    this.series_title,
-    this.cover_img,
-    this.state,
-    this.description,
-    this.books,
-  });
+  SeriesDetailsResponse({this.id, this.series_title, this.cover_img, this.state, this.description, this.books});
 
-  factory SeriesDetailsResponse.fromJson(Map<String, dynamic> json) =>
-      _$SeriesDetailsResponseFromJson(json);
+  factory SeriesDetailsResponse.fromJson(Map<String, dynamic> json) => _$SeriesDetailsResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$SeriesDetailsResponseToJson(this);
 }
@@ -46,8 +38,7 @@ class BooksInSeries {
     this.page_count = 0,
   });
 
-  factory BooksInSeries.fromJson(Map<String, dynamic> json) =>
-      _$BooksInSeriesFromJson(json);
+  factory BooksInSeries.fromJson(Map<String, dynamic> json) => _$BooksInSeriesFromJson(json);
 
   Map<String, dynamic> toJson() => _$BooksInSeriesToJson(this);
 }
@@ -55,22 +46,14 @@ class BooksInSeries {
 Future<SeriesDetailsResponse> fetchSeriesBookDetails(int seriesId) async {
   final dio = Dio();
 
-  final allSeriesRes = await dio.get(
-    'http://localhost:3000/bookseries/getAllBookSeries',
-  );
+  final allSeriesRes = await dio.get('http://localhost:3000/bookseries/getAllBookSeries');
 
-  final booksRes = await dio.get(
-    'http://localhost:3000/bookseries/getBookSeriesById/$seriesId',
-  );
+  final booksRes = await dio.get('http://localhost:3000/bookseries/getBookSeriesById/$seriesId');
 
   if (allSeriesRes.statusCode == 200 && booksRes.statusCode == 200) {
-    final seriesJson = (allSeriesRes.data['bookseries'] as List).firstWhere(
-      (s) => s['id'] == seriesId,
-    );
+    final seriesJson = (allSeriesRes.data['bookseries'] as List).firstWhere((s) => s['id'] == seriesId);
 
-    final List<BooksInSeries> books = (booksRes.data['books'] as List)
-        .map((b) => BooksInSeries.fromJson(b))
-        .toList();
+    final List<BooksInSeries> books = (booksRes.data['books'] as List).map((b) => BooksInSeries.fromJson(b)).toList();
 
     return SeriesDetailsResponse(
       id: seriesJson['id'],

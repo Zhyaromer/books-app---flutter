@@ -11,8 +11,7 @@ class SeriesResponse {
 
   SeriesResponse({this.id, this.series_title, this.cover_img, this.state});
 
-  factory SeriesResponse.fromJson(Map<String, dynamic> json) =>
-      _$SeriesResponseFromJson(json);
+  factory SeriesResponse.fromJson(Map<String, dynamic> json) => _$SeriesResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$SeriesResponseToJson(this);
 }
@@ -20,9 +19,7 @@ class SeriesResponse {
 Future<List<SeriesResponse>> fetchAllSeries() async {
   final dio = Dio();
 
-  final response = await dio.get(
-    'http://localhost:3000/bookseries/getAllBookSeries',
-  );
+  final response = await dio.get('http://localhost:3000/bookseries/getAllBookSeries');
 
   if (response.statusCode == 200) {
     final List seriesList = response.data['bookseries'];

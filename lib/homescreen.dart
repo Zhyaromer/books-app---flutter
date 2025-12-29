@@ -93,11 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
                   'Book Series',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -108,11 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
                   'Explore popular book series',
-                  style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -123,20 +115,11 @@ class _HomeScreenState extends State<HomeScreen> {
               future: widget.series,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return SizedBox(
-                    height: 230.0,
-                    child: Center(child: CircularProgressIndicator()),
-                  );
+                  return SizedBox(height: 230.0, child: Center(child: CircularProgressIndicator()));
                 } else if (snapshot.hasError) {
-                  return SizedBox(
-                    height: 230.0,
-                    child: Center(child: Text('Error: ${snapshot.error}')),
-                  );
+                  return SizedBox(height: 230.0, child: Center(child: Text('Error: ${snapshot.error}')));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return SizedBox(
-                    height: 230.0,
-                    child: Center(child: Text('No series found')),
-                  );
+                  return SizedBox(height: 230.0, child: Center(child: Text('No series found')));
                 } else {
                   final items = snapshot.data!;
                   return CarouselSlider(
@@ -168,10 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Colors.amber,
                                 borderRadius: BorderRadius.circular(10.0),
                                 image: imageUrl.isNotEmpty
-                                    ? DecorationImage(
-                                        image: NetworkImage(imageUrl),
-                                        fit: BoxFit.fill,
-                                      )
+                                    ? DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.fill)
                                     : null,
                               ),
                               child: Stack(
@@ -182,16 +162,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     right: 0,
                                     child: Container(
                                       color: Colors.black54,
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: 10,
-                                        horizontal: 20,
-                                      ),
+                                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                                       child: Text(
                                         e.series_title ?? '',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ),
@@ -222,21 +196,14 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               color: const Color(0xFF1F1F1F),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                  vertical: 16.0,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
                 child: Column(
                   children: [
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Explore by Genre',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(height: 16),
@@ -257,22 +224,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           return Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(8.0),
-                              border: Border.all(
-                                color: isSelected ? Colors.white : Colors.grey,
-                                width: 2.0,
-                              ),
-                              color: isSelected
-                                  ? const Color(0xFF121212)
-                                  : Colors.grey[800],
+                              border: Border.all(color: isSelected ? Colors.white : Colors.grey, width: 2.0),
+                              color: isSelected ? const Color(0xFF121212) : Colors.grey[800],
                               image: DecorationImage(
-                                image: NetworkImage(
-                                  widget.types[index]['image']!,
-                                ),
+                                image: NetworkImage(widget.types[index]['image']!),
                                 fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(
-                                  Colors.black.withOpacity(0.4),
-                                  BlendMode.darken,
-                                ),
+                                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.4), BlendMode.darken),
                               ),
                             ),
 
@@ -284,10 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Center(
                                 child: Text(
                                   type['name']!,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ),
@@ -300,13 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
 
-            horizontalBooks(
-              context,
-              Books4,
-              'selling Books',
-              'Top picks based on sales',
-              const Color(0xFF1F1F1F),
-            ),
+            horizontalBooks(context, Books4, 'selling Books', 'Top picks based on sales', const Color(0xFF1F1F1F)),
           ],
         ),
       ),
@@ -325,14 +273,9 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
   List<Map<String, String>> types = [
     {
       'name': 'ڕۆمان',
-      'image':
-          'https://t4.ftcdn.net/jpg/07/08/65/71/360_F_708657199_3Ovqz4ZJzEzNkWkQVBZHjseww5zwXMGB.jpg',
+      'image': 'https://t4.ftcdn.net/jpg/07/08/65/71/360_F_708657199_3Ovqz4ZJzEzNkWkQVBZHjseww5zwXMGB.jpg',
     },
-    {
-      'name': 'شیعر',
-      'image':
-          'https://img.goodfon.com/wallpaper/big/1/67/kniga-stihi-lavanda-stol.webp',
-    },
+    {'name': 'شیعر', 'image': 'https://img.goodfon.com/wallpaper/big/1/67/kniga-stihi-lavanda-stol.webp'},
     {
       'name': 'چیرۆک',
       'image':
@@ -340,8 +283,7 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
     },
     {
       'name': 'فانتاسی',
-      'image':
-          'https://wallpapers.com/images/hd/fantasy-adventure-emerging-from-book-ipc9z1iy1q2b4mb6.jpg',
+      'image': 'https://wallpapers.com/images/hd/fantasy-adventure-emerging-from-book-ipc9z1iy1q2b4mb6.jpg',
     },
     {
       'name': 'خەیاڵی',
@@ -355,13 +297,11 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
     },
     {
       'name': 'ترسناک',
-      'image':
-          'https://t3.ftcdn.net/jpg/06/04/33/76/360_F_604337685_kCcwRTMmbFKD8ObmYhZRn3tI5a50QbMS.jpg',
+      'image': 'https://t3.ftcdn.net/jpg/06/04/33/76/360_F_604337685_kCcwRTMmbFKD8ObmYhZRn3tI5a50QbMS.jpg',
     },
     {
       'name': 'نادیار',
-      'image':
-          'https://t4.ftcdn.net/jpg/06/53/51/05/360_F_653510556_oS0CRp63dp9KBuoWNaqqi412M0CvA1GT.jpg',
+      'image': 'https://t4.ftcdn.net/jpg/06/53/51/05/360_F_653510556_oS0CRp63dp9KBuoWNaqqi412M0CvA1GT.jpg',
     },
     {
       'name': 'زمانەوانی',
@@ -370,8 +310,7 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
     },
     {
       'name': 'چیرۆکی',
-      'image':
-          'https://w0.peakpx.com/wallpaper/547/144/HD-wallpaper-story-book-twilight-tree-house-girl-art.jpg',
+      'image': 'https://w0.peakpx.com/wallpaper/547/144/HD-wallpaper-story-book-twilight-tree-house-girl-art.jpg',
     },
     {'name': 'خەیاڵی ئەدەبی', 'image': 'literary_fiction.jpg'},
     {'name': 'مێژووی', 'image': 'history.jpg'},
@@ -413,14 +352,8 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
           },
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.book_online),
-              label: 'my Books',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.explore),
-              label: 'Discover',
-            ),
+            BottomNavigationBarItem(icon: Icon(Icons.book_online), label: 'my Books'),
+            BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Discover'),
             BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
           ],
         ),
@@ -437,9 +370,7 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
             onTypeSelected: (index) {
               setState(() {
                 selectedTypeIndex = index;
-                randomBooks = fetchRandomBooks(
-                  types[selectedTypeIndex]['name']!,
-                );
+                randomBooks = fetchRandomBooks(types[selectedTypeIndex]['name']!);
               });
             },
             selectedTypeIndex: selectedTypeIndex,

@@ -1,6 +1,7 @@
 import 'package:books_app__flutter/discover.dart';
 import 'package:books_app__flutter/model/SeriesResponse.dart';
 import 'package:books_app__flutter/model/books.dart';
+import 'package:books_app__flutter/myBooks.dart';
 import 'package:books_app__flutter/seriesdetails.dart';
 import 'package:books_app__flutter/widgets/cards/horizontalBooks.dart';
 import 'package:flutter/material.dart';
@@ -443,7 +444,7 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
             },
             selectedTypeIndex: selectedTypeIndex,
           ),
-          const Center(child: Text('My Books Screen')),
+          const MyBooks(),
           Discover(),
           const Center(child: Text('Search Screen')),
         ],

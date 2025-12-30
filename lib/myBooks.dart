@@ -9,9 +9,25 @@ class MyBooks extends StatefulWidget {
   State<MyBooks> createState() => _MyBooksState();
 }
 
-class _MyBooksState extends State<MyBooks> {
+class _MyBooksState extends State<MyBooks> with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  void _refreshData() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void didUpdateWidget(MyBooks oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _refreshData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       backgroundColor: const Color(0xFF1F1F1F),
       appBar: AppBar(
@@ -154,8 +170,12 @@ class _MyBooksState extends State<MyBooks> {
                 itemBuilder: (context, index) {
                   final status = allStatuses[index];
                   return InkWell(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyBooksDetail(status: status)));
+                    onTap: () async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyBooksDetail(status: status)),
+                      );
+                      setState(() {});
                     },
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 6),

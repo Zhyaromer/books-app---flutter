@@ -270,7 +270,7 @@ class BookLibraryApp extends StatefulWidget {
 }
 
 class _BookLibraryAppState extends State<BookLibraryApp> {
-  List<Map<String, String>> types = [
+  final List<Map<String, String>> types = [
     {
       'name': 'ڕۆمان',
       'image': 'https://t4.ftcdn.net/jpg/07/08/65/71/360_F_708657199_3Ovqz4ZJzEzNkWkQVBZHjseww5zwXMGB.jpg',
@@ -324,6 +324,8 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
   late Future<List<Books>> randomBooks;
   late Future<List<SeriesResponse>> series;
 
+  final GlobalKey<State<MyBooks>> _myBooksKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
@@ -348,6 +350,9 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
           onTap: (index) {
             setState(() {
               _currentIndex = index;
+              if (index == 1) {
+                _myBooksKey.currentState?.setState(() {});
+              }
             });
           },
           items: const [
@@ -375,7 +380,7 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
             },
             selectedTypeIndex: selectedTypeIndex,
           ),
-          const MyBooks(),
+          MyBooks(key: _myBooksKey),
           Discover(),
           const Center(child: Text('Search Screen')),
         ],

@@ -22,9 +22,9 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
       setState(() {
         sort = newSort;
         if (sort == 'Newest date added') {
-          books.sort((a, b) => a.addedDate!.compareTo(b.addedDate!));
-        } else if (sort == 'Oldest date added') {
           books.sort((a, b) => b.addedDate!.compareTo(a.addedDate!));
+        } else if (sort == 'Oldest date added') {
+          books.sort((a, b) => a.addedDate!.compareTo(b.addedDate!));
         } else if (sort == 'Title A-Z') {
           books.sort((a, b) => a.title.compareTo(b.title));
         } else if (sort == 'Title Z-A') {
@@ -42,7 +42,7 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
   void initState() {
     super.initState();
     books = allBooksForStatus(widget.status.label);
-    books.sort((a, b) => a.addedDate!.compareTo(b.addedDate!));
+    books.sort((a, b) => b.addedDate!.compareTo(a.addedDate!));
     cacheBooks = List.from(books);
   }
 
@@ -189,11 +189,16 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                       itemBuilder: (context, index) {
                         final book = books[index];
                         return InkWell(
-                          onTap: () {
-                            Navigator.push(
+                          onTap: () async {
+                            await Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => BookDetails(book_id: book.id)),
                             );
+                            setState(() {
+                              books = allBooksForStatus(widget.status.label);
+                              books.sort((a, b) => a.addedDate!.compareTo(b.addedDate!));
+                              cacheBooks = List.from(books);
+                            });
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),

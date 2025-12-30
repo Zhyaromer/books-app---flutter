@@ -1,18 +1,19 @@
 import 'package:books_app__flutter/authordetails.dart';
 import 'package:books_app__flutter/model/BookDetailResponse.dart';
-import 'package:books_app__flutter/model/reading_status_list.dart';
+import 'package:books_app__flutter/providers/reading_status_provider.dart';
 import 'package:books_app__flutter/seriesdetails.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BookDetails extends StatefulWidget {
+class BookDetails extends ConsumerStatefulWidget {
   const BookDetails({super.key, required this.book_id});
   final int book_id;
 
   @override
-  State<BookDetails> createState() => _BookDetailsState();
+  ConsumerState<BookDetails> createState() => _BookDetailsState();
 }
 
-class _BookDetailsState extends State<BookDetails> {
+class _BookDetailsState extends ConsumerState<BookDetails> {
   late Future<BookDetailResponse> bookDetailFuture;
   String selectedLabel = 'Want To Read';
 
@@ -20,7 +21,8 @@ class _BookDetailsState extends State<BookDetails> {
   void initState() {
     super.initState();
     bookDetailFuture = fetchBookDetail(widget.book_id);
-    selectedLabel = getSelectedStatusLabel(widget.book_id);
+    final notifier = ref.read(readingStatusProvider.notifier);
+    selectedLabel = notifier.getSelectedStatusLabel(widget.book_id);
   }
 
   @override
@@ -74,7 +76,8 @@ class _BookDetailsState extends State<BookDetails> {
                       selectedLabel = result;
                     });
 
-                    addOrUpdateBookStatus(widget.book_id, result, book!);
+                    final notifier = ref.read(readingStatusProvider.notifier);
+                    notifier.addOrUpdateBookStatus(widget.book_id, result, book!);
                   }
                 },
               ),
@@ -717,16 +720,16 @@ void _openImagePreview(BuildContext context, String imageUrl, String tag) {
   );
 }
 
-class _LibraryStatusSheet extends StatefulWidget {
+class _LibraryStatusSheet extends ConsumerStatefulWidget {
   final String initialLabel;
 
   const _LibraryStatusSheet({Key? key, required this.initialLabel}) : super(key: key);
 
   @override
-  State<_LibraryStatusSheet> createState() => _LibraryStatusSheetState();
+  ConsumerState<_LibraryStatusSheet> createState() => _LibraryStatusSheetState();
 }
 
-class _LibraryStatusSheetState extends State<_LibraryStatusSheet> {
+class _LibraryStatusSheetState extends ConsumerState<_LibraryStatusSheet> {
   late String tempSelectedLabel;
 
   @override
@@ -737,6 +740,8 @@ class _LibraryStatusSheetState extends State<_LibraryStatusSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final notifier = ref.read(readingStatusProvider.notifier);
+    final allStatuses = notifier.allStatuses;
     return SizedBox(
       height: 420,
       child: Padding(
@@ -775,9 +780,9 @@ class _LibraryStatusSheetState extends State<_LibraryStatusSheet> {
 
             Expanded(
               child: ListView.builder(
-                itemCount: allStatusesList().length,
+                itemCount: allStatuses.length,
                 itemBuilder: (context, index) {
-                  final statusItem = allStatusesList()[index];
+                  final statusItem = allStatuses[index];
 
                   return RadioListTile<String>(
                     value: statusItem.label,

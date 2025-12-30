@@ -1,17 +1,19 @@
 import 'package:books_app__flutter/bookdetails.dart';
 import 'package:books_app__flutter/model/reading_status_list.dart';
+import 'package:books_app__flutter/providers/reading_status_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyBooksDetail extends StatefulWidget {
+class MyBooksDetail extends ConsumerStatefulWidget {
   const MyBooksDetail({super.key, required this.status});
 
   final ReadingStatusItem status;
 
   @override
-  State<MyBooksDetail> createState() => _MyBooksDetailState();
+  ConsumerState<MyBooksDetail> createState() => _MyBooksDetailState();
 }
 
-class _MyBooksDetailState extends State<MyBooksDetail> {
+class _MyBooksDetailState extends ConsumerState<MyBooksDetail> {
   late List<ReadingStatusList> books;
   late List<ReadingStatusList> cacheBooks;
   String sort = 'Newest date added';
@@ -41,7 +43,8 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
   @override
   void initState() {
     super.initState();
-    books = allBooksForStatus(widget.status.label);
+    final notifier = ref.read(readingStatusProvider.notifier);
+    books = notifier.allBooksForStatus(widget.status.label);
     books.sort((a, b) => b.addedDate!.compareTo(a.addedDate!));
     cacheBooks = List.from(books);
   }
@@ -189,16 +192,11 @@ class _MyBooksDetailState extends State<MyBooksDetail> {
                       itemBuilder: (context, index) {
                         final book = books[index];
                         return InkWell(
-                          onTap: () async {
-                            await Navigator.push(
+                          onTap: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => BookDetails(book_id: book.id)),
                             );
-                            setState(() {
-                              books = allBooksForStatus(widget.status.label);
-                              books.sort((a, b) => a.addedDate!.compareTo(b.addedDate!));
-                              cacheBooks = List.from(books);
-                            });
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),

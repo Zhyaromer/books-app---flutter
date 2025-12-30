@@ -380,7 +380,7 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
             },
             selectedTypeIndex: selectedTypeIndex,
           ),
-          MyBooks(key: _myBooksKey),
+          const MyBooks(),
           Discover(),
           const Center(child: Text('Search Screen')),
         ],

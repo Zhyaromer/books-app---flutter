@@ -2,9 +2,10 @@ import 'package:books_app__flutter/homescreen.dart';
 import 'package:books_app__flutter/login.dart';
 import 'package:books_app__flutter/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(MaterialApp(home: const BookLibraryApp(), debugShowCheckedModeBanner: false));
+  runApp(const ProviderScope(child: MaterialApp(home: BookLibraryApp(), debugShowCheckedModeBanner: false)));
 }
 
 class startscreen extends StatefulWidget {

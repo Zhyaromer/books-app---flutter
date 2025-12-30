@@ -1,33 +1,22 @@
 import 'package:books_app__flutter/model/reading_status_list.dart';
 import 'package:books_app__flutter/myBooksDetail.dart';
+import 'package:books_app__flutter/providers/reading_status_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MyBooks extends StatefulWidget {
+class MyBooks extends ConsumerStatefulWidget {
   const MyBooks({super.key});
 
   @override
-  State<MyBooks> createState() => _MyBooksState();
+  ConsumerState<MyBooks> createState() => _MyBooksState();
 }
 
-class _MyBooksState extends State<MyBooks> with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
-
-  void _refreshData() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
-  void didUpdateWidget(MyBooks oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    _refreshData();
-  }
-
+class _MyBooksState extends ConsumerState<MyBooks> {
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    final notifier = ref.read(readingStatusProvider.notifier);
+    final state = ref.watch(readingStatusProvider);
+    final allStatuses = [...defaultStatuses, ...state.customStatuses];
     return Scaffold(
       backgroundColor: const Color(0xFF1F1F1F),
       appBar: AppBar(
@@ -128,10 +117,7 @@ class _MyBooksState extends State<MyBooks> with AutomaticKeepAliveClientMixin {
                                     return;
                                   }
 
-                                  setState(() {
-                                    addCustomStatus(value);
-                                  });
-
+                                  notifier.addCustomStatus(value);
                                   Navigator.pop(context);
                                 },
                                 child: const Text(
@@ -186,9 +172,9 @@ class _MyBooksState extends State<MyBooks> with AutomaticKeepAliveClientMixin {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
-                              getLatestImageForStatus(status.label) == 'none'
+                              notifier.getLatestImageForStatus(status.label) == 'none'
                                   ? 'https://i.ytimg.com/vi/lEVTPOtc0AU/sddefault.jpg'
-                                  : getLatestImageForStatus(status.label),
+                                  : notifier.getLatestImageForStatus(status.label),
                               width: 120,
                               height: 120,
                               fit: BoxFit.fill,
@@ -203,7 +189,7 @@ class _MyBooksState extends State<MyBooks> with AutomaticKeepAliveClientMixin {
                               SizedBox(height: 8),
 
                               Text(
-                                'Total Books: ${totalBookCountPerStatus(status.label)}',
+                                'Total Books: ${notifier.totalBookCountPerStatus(status.label)}',
                                 style: const TextStyle(color: Colors.grey, fontSize: 14),
                               ),
                             ],

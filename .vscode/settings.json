@@ -1,8 +1,9 @@
 {
     "[dart]": {
-        "editor.formatOnSave": true, // optional if you want auto-format
+        "editor.formatOnSave": true,
         "editor.defaultFormatter": "Dart-Code.dart-code",
-        "editor.wordWrap": "off" // THIS disables the visual wrapping
+        "editor.wordWrap": "off"
     },
-    "editor.wordWrap": "off" // optional global default
+    "dart.lineLength": 120,
+    "editor.wordWrap": "off"
 }

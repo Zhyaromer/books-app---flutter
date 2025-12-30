@@ -32,10 +32,7 @@ class _BookDetailsState extends State<BookDetails> {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(
-            child: Text(
-              'Error: ${snapshot.error}',
-              style: const TextStyle(color: Colors.red),
-            ),
+            child: Text('Error: ${snapshot.error}', style: const TextStyle(color: Colors.red)),
           );
         } else if (!snapshot.hasData || snapshot.data == null) {
           return const Center(child: Text('No data available'));
@@ -45,9 +42,7 @@ class _BookDetailsState extends State<BookDetails> {
         final book = bookDetail.book;
         final reviews = bookDetail.reviews;
         final similiarBooks = bookDetail.similarBooks;
-        final Series? series = bookDetail.series?.isNotEmpty == true
-            ? bookDetail.series!.first
-            : null;
+        final Series? series = bookDetail.series?.isNotEmpty == true ? bookDetail.series!.first : null;
 
         final seriesBooks = bookDetail.seriesBooks;
 
@@ -57,250 +52,30 @@ class _BookDetailsState extends State<BookDetails> {
             iconTheme: const IconThemeData(color: Colors.white),
             title: Text(
               book?.title ?? 'Book Details',
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
             actions: [
               IconButton(
                 icon: const Icon(Icons.menu, color: Colors.white),
-                onPressed: () {
-                  showModalBottomSheet(
+                onPressed: () async {
+                  final result = await showModalBottomSheet<String>(
                     context: context,
+                    backgroundColor: const Color(0xFF2C2C2C),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
                     builder: (context) {
-                      return StatefulBuilder(
-                        builder: (BuildContext context, setState) {
-                          return Container(
-                            height: 400,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                topRight: Radius.circular(20),
-                              ),
-                              color: const Color(0xFF2C2C2C),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 28.0,
-                              ),
-                              child: Column(
-                                children: [
-                                  ListTile(
-                                    leading: const Icon(
-                                      Icons.library_add,
-                                      color: Colors.white,
-                                    ),
-                                    title: const Text(
-                                      'add to your library',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      String tempSelectedLabel = selectedLabel;
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (context) {
-                                          return StatefulBuilder(
-                                            builder:
-                                                (
-                                                  BuildContext context,
-                                                  StateSetter setModalState,
-                                                ) {
-                                                  return Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          const BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                  20,
-                                                                ),
-                                                            topRight:
-                                                                Radius.circular(
-                                                                  20,
-                                                                ),
-                                                          ),
-                                                      color: const Color(
-                                                        0xFF2C2C2C,
-                                                      ),
-                                                    ),
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.symmetric(
-                                                            horizontal: 16.0,
-                                                            vertical: 20.0,
-                                                          ),
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              TextButton(
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
-                                                                },
-                                                                child: const Text(
-                                                                  'Cancel',
-                                                                  style: TextStyle(
-                                                                    color: Colors
-                                                                        .lightBlueAccent,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                'Add to Library',
-                                                                style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                              ),
-                                                              TextButton(
-                                                                style: TextButton.styleFrom(
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .black,
-                                                                ),
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                    context,
-                                                                  );
-                                                                  setState(() {
-                                                                    selectedLabel =
-                                                                        tempSelectedLabel;
-                                                                  });
-                                                                  addOrUpdateBookStatus(
-                                                                    widget
-                                                                        .book_id,
-                                                                    tempSelectedLabel,
-                                                                    book!,
-                                                                  );
-                                                                },
-                                                                child: const Text(
-                                                                  'Save',
-                                                                  style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-
-                                                          Divider(
-                                                            color:
-                                                                Colors.white30,
-                                                          ),
-
-                                                          SizedBox(height: 10),
-
-                                                          Text(
-                                                            'Set your reading status',
-                                                            style: TextStyle(
-                                                              color: Colors
-                                                                  .white70,
-                                                            ),
-                                                          ),
-
-                                                          SizedBox(height: 10),
-
-                                                          Expanded(
-                                                            child: ListView.builder(
-                                                              itemCount:
-                                                                  allStatusesList()
-                                                                      .length,
-                                                              itemBuilder: (context, index) {
-                                                                final statusItem =
-                                                                    allStatusesList()[index];
-                                                                print(
-                                                                  statusItem
-                                                                      .label,
-                                                                );
-                                                                print(
-                                                                  tempSelectedLabel ==
-                                                                      statusItem
-                                                                          .label,
-                                                                );
-                                                                print(
-                                                                  tempSelectedLabel,
-                                                                );
-                                                                return RadioListTile(
-                                                                  selected:
-                                                                      tempSelectedLabel ==
-                                                                      statusItem
-                                                                          .label,
-                                                                  activeColor:
-                                                                      Colors
-                                                                          .lightBlueAccent,
-                                                                  title: Text(
-                                                                    statusItem
-                                                                        .label,
-                                                                    style: TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                    ),
-                                                                  ),
-                                                                  value:
-                                                                      statusItem
-                                                                          .label,
-                                                                  groupValue:
-                                                                      tempSelectedLabel,
-                                                                  onChanged: (value) {
-                                                                    setModalState(() {
-                                                                      tempSelectedLabel =
-                                                                          value
-                                                                              .toString();
-                                                                    });
-                                                                  },
-                                                                );
-                                                              },
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: const Icon(
-                                      Icons.share,
-                                      color: Colors.white,
-                                    ),
-                                    title: const Text(
-                                      'Share',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
+                      return _LibraryStatusSheet(initialLabel: selectedLabel);
                     },
                   );
+
+                  if (result != null && mounted) {
+                    setState(() {
+                      selectedLabel = result;
+                    });
+
+                    addOrUpdateBookStatus(widget.book_id, result, book!);
+                  }
                 },
               ),
             ],
@@ -317,22 +92,14 @@ class _BookDetailsState extends State<BookDetails> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          _openImagePreview(
-                            context,
-                            book!.cover_image!,
-                            'book_cover_${book.id}',
-                          );
+                          _openImagePreview(context, book!.cover_image!, 'book_cover_${book.id}');
                         },
                         child: Hero(
                           tag: 'book_cover_${book?.id}',
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: book?.cover_image != null
-                                ? Image.network(
-                                    book!.cover_image!,
-                                    height: 265,
-                                    fit: BoxFit.cover,
-                                  )
+                                ? Image.network(book!.cover_image!, height: 265, fit: BoxFit.cover)
                                 : const Icon(Icons.book, size: 100),
                           ),
                         ),
@@ -347,29 +114,18 @@ class _BookDetailsState extends State<BookDetails> {
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: [
-                                Colors.black.withOpacity(0.8),
-                                Colors.black.withOpacity(0.5),
-                              ],
+                              colors: [Colors.black.withOpacity(0.8), Colors.black.withOpacity(0.5)],
                             ),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(
-                                Icons.star,
-                                color: Colors.yellow[700],
-                                size: 14,
-                              ),
+                              Icon(Icons.star, color: Colors.yellow[700], size: 14),
                               const SizedBox(width: 4),
                               Text(
                                 '${book?.rating?.toStringAsFixed(1) ?? 'N/A'} (${bookDetail.reviews?.length})',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
@@ -386,11 +142,7 @@ class _BookDetailsState extends State<BookDetails> {
                     child: Text(
                       book?.title ?? 'Unknown Title',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: const TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -399,11 +151,7 @@ class _BookDetailsState extends State<BookDetails> {
                   child: Text(
                     ' by ${book?.name ?? 'Unknown Author'}',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white70,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: const TextStyle(color: Colors.white70, fontSize: 18, fontWeight: FontWeight.w500),
                   ),
                 ),
 
@@ -415,31 +163,19 @@ class _BookDetailsState extends State<BookDetails> {
                     Text(
                       book?.language ?? 'Unknown Language',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: const TextStyle(color: Colors.white70, fontSize: 18, fontWeight: FontWeight.w500),
                     ),
 
                     const Text(
                       ' * ',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: TextStyle(color: Colors.white70, fontSize: 18, fontWeight: FontWeight.w500),
                     ),
 
                     Text(
                       // '${book?.genre ?? 'Unknown Genre'} & Mystic & Adventure',
                       'Comedy & Mystic & Adventure',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: const TextStyle(color: Colors.white70, fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
@@ -451,10 +187,7 @@ class _BookDetailsState extends State<BookDetails> {
                   child: Container(
                     height: 150,
                     padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[900],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    decoration: BoxDecoration(color: Colors.grey[900], borderRadius: BorderRadius.circular(12)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -464,20 +197,12 @@ class _BookDetailsState extends State<BookDetails> {
                             children: [
                               Text(
                                 'Book info',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                               ),
 
                               SizedBox(width: 6),
 
-                              Icon(
-                                Icons.info_outline,
-                                color: Colors.white,
-                                size: 18,
-                              ),
+                              Icon(Icons.info_outline, color: Colors.white, size: 18),
                             ],
                           ),
                         ),
@@ -489,51 +214,30 @@ class _BookDetailsState extends State<BookDetails> {
                           children: [
                             Text(
                               book!.published_date!.substring(0, 10),
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 13,
-                              ),
+                              style: TextStyle(color: Colors.white70, fontSize: 13),
                             ),
 
                             const SizedBox(width: 8),
 
-                            Text(
-                              ' * ',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 13,
-                              ),
-                            ),
+                            Text(' * ', style: TextStyle(color: Colors.white70, fontSize: 13)),
 
                             const SizedBox(width: 8),
 
                             Text(
                               '${book.page_count ?? 'N/A'} Pages',
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 13,
-                              ),
+                              style: TextStyle(color: Colors.white70, fontSize: 13),
                             ),
 
                             const SizedBox(width: 8),
 
                             if (series?.series_title != null) ...[
-                              Text(
-                                ' * ',
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 13,
-                                ),
-                              ),
+                              Text(' * ', style: TextStyle(color: Colors.white70, fontSize: 13)),
 
                               const SizedBox(width: 8),
 
                               Text(
                                 'Series of ${series?.series_title ?? 'N/A'}',
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 13,
-                                ),
+                                style: TextStyle(color: Colors.white70, fontSize: 13),
                               ),
                             ],
                           ],
@@ -548,14 +252,9 @@ class _BookDetailsState extends State<BookDetails> {
                               onPressed: () {},
                               style: ButtonStyle(
                                 padding: MaterialStateProperty.all(
-                                  const EdgeInsets.symmetric(
-                                    horizontal: 50,
-                                    vertical: 18,
-                                  ),
+                                  const EdgeInsets.symmetric(horizontal: 50, vertical: 18),
                                 ),
-                                backgroundColor: MaterialStateProperty.all(
-                                  Colors.grey[800],
-                                ),
+                                backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
                               ),
                               child: Row(
                                 children: const [
@@ -563,10 +262,7 @@ class _BookDetailsState extends State<BookDetails> {
                                   SizedBox(width: 8),
                                   Text(
                                     'Get',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -579,22 +275,14 @@ class _BookDetailsState extends State<BookDetails> {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          seriesdetails(series_id: series!.id!),
-                                    ),
+                                    MaterialPageRoute(builder: (context) => seriesdetails(series_id: series!.id!)),
                                   );
                                 },
                                 style: ButtonStyle(
                                   padding: MaterialStateProperty.all(
-                                    const EdgeInsets.symmetric(
-                                      horizontal: 30,
-                                      vertical: 18,
-                                    ),
+                                    const EdgeInsets.symmetric(horizontal: 30, vertical: 18),
                                   ),
-                                  backgroundColor: MaterialStateProperty.all(
-                                    Colors.grey[800],
-                                  ),
+                                  backgroundColor: MaterialStateProperty.all(Colors.grey[800]),
                                 ),
                                 child: Row(
                                   children: const [
@@ -602,10 +290,7 @@ class _BookDetailsState extends State<BookDetails> {
                                     SizedBox(width: 8),
                                     Text(
                                       'View Series',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                     ),
                                   ],
                                 ),
@@ -618,20 +303,14 @@ class _BookDetailsState extends State<BookDetails> {
                               onPressed: () {},
                               style: ButtonStyle(
                                 padding: MaterialStateProperty.all(
-                                  const EdgeInsets.symmetric(
-                                    horizontal: 50,
-                                    vertical: 18,
-                                  ),
+                                  const EdgeInsets.symmetric(horizontal: 50, vertical: 18),
                                 ),
                               ),
                               child: Row(
                                 children: const [
                                   Text(
                                     'Sample',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                                   ),
                                 ],
                               ),
@@ -651,19 +330,13 @@ class _BookDetailsState extends State<BookDetails> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              AuthorDetails(id: bookDetail.book!.author_id!),
-                        ),
+                        MaterialPageRoute(builder: (context) => AuthorDetails(id: bookDetail.book!.author_id!)),
                       );
                     },
                     child: Container(
                       height: 150,
                       padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[900],
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      decoration: BoxDecoration(color: Colors.grey[900], borderRadius: BorderRadius.circular(12)),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -673,9 +346,7 @@ class _BookDetailsState extends State<BookDetails> {
                             backgroundImage: bookDetail.book?.imgURL != null
                                 ? NetworkImage(bookDetail.book!.imgURL!)
                                 : null,
-                            child: bookDetail.book?.imgURL == null
-                                ? const Icon(Icons.person, size: 40)
-                                : null,
+                            child: bookDetail.book?.imgURL == null ? const Icon(Icons.person, size: 40) : null,
                           ),
                           const SizedBox(width: 12),
                           Expanded(
@@ -692,12 +363,8 @@ class _BookDetailsState extends State<BookDetails> {
                                 ),
                                 const SizedBox(height: 6),
                                 Text(
-                                  bookDetail.book?.bio ??
-                                      'No biography available.',
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 14,
-                                  ),
+                                  bookDetail.book?.bio ?? 'No biography available.',
+                                  style: const TextStyle(color: Colors.white70, fontSize: 14),
                                   maxLines: 4,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -714,10 +381,7 @@ class _BookDetailsState extends State<BookDetails> {
 
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 60,
-                    vertical: 15,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   decoration: BoxDecoration(color: Colors.grey[900]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -725,19 +389,12 @@ class _BookDetailsState extends State<BookDetails> {
                       SizedBox(height: 20),
                       const Text(
                         'Description',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         book.description ?? 'No description available.',
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                        ),
+                        style: const TextStyle(color: Colors.white70, fontSize: 14),
                       ),
                     ],
                   ),
@@ -745,23 +402,14 @@ class _BookDetailsState extends State<BookDetails> {
 
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.only(
-                    top: 30,
-                    bottom: 30,
-                    left: 60,
-                    right: 0,
-                  ),
+                  padding: const EdgeInsets.only(top: 30, bottom: 30, left: 60, right: 0),
                   decoration: BoxDecoration(color: Colors.grey[900]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Customer Reviews (${reviews?.length ?? 0})',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                       ),
 
                       const SizedBox(height: 20),
@@ -782,34 +430,22 @@ class _BookDetailsState extends State<BookDetails> {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 8.0,
-                                    horizontal: 12.0,
-                                  ),
+                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(
                                             children: [
                                               CircleAvatar(
                                                 radius: 25,
-                                                backgroundImage:
-                                                    review?.coverImgURL != null
-                                                    ? NetworkImage(
-                                                        review!.coverImgURL!,
-                                                      )
+                                                backgroundImage: review?.coverImgURL != null
+                                                    ? NetworkImage(review!.coverImgURL!)
                                                     : null,
-                                                child:
-                                                    review?.coverImgURL == null
-                                                    ? const Icon(
-                                                        Icons.person,
-                                                        size: 16,
-                                                      )
+                                                child: review?.coverImgURL == null
+                                                    ? const Icon(Icons.person, size: 16)
                                                     : null,
                                               ),
                                               const SizedBox(width: 8),
@@ -823,29 +459,16 @@ class _BookDetailsState extends State<BookDetails> {
                                             ],
                                           ),
                                           Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
                                               Row(
                                                 children: [
-                                                  Icon(
-                                                    Icons.star,
-                                                    color: Colors.yellow[700],
-                                                    size: 16,
-                                                  ),
+                                                  Icon(Icons.star, color: Colors.yellow[700], size: 16),
                                                   const SizedBox(width: 4),
                                                   Text(
-                                                    review?.rating != null
-                                                        ? review!.rating!
-                                                              .toStringAsFixed(
-                                                                1,
-                                                              )
-                                                        : 'N/A',
-                                                    style: const TextStyle(
-                                                      color: Colors.white70,
-                                                    ),
+                                                    review?.rating != null ? review!.rating!.toStringAsFixed(1) : 'N/A',
+                                                    style: const TextStyle(color: Colors.white70),
                                                   ),
                                                 ],
                                               ),
@@ -854,13 +477,9 @@ class _BookDetailsState extends State<BookDetails> {
 
                                               Text(
                                                 review?.created_at != null
-                                                    ? review!.created_at!
-                                                          .substring(0, 10)
+                                                    ? review!.created_at!.substring(0, 10)
                                                     : 'N/A',
-                                                style: const TextStyle(
-                                                  color: Colors.white38,
-                                                  fontSize: 10,
-                                                ),
+                                                style: const TextStyle(color: Colors.white38, fontSize: 10),
                                               ),
                                             ],
                                           ),
@@ -871,11 +490,8 @@ class _BookDetailsState extends State<BookDetails> {
                                       Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          review?.comment ??
-                                              'No comment provided.',
-                                          style: const TextStyle(
-                                            color: Colors.white70,
-                                          ),
+                                          review?.comment ?? 'No comment provided.',
+                                          style: const TextStyle(color: Colors.white70),
                                         ),
                                       ),
                                     ],
@@ -906,12 +522,7 @@ class _BookDetailsState extends State<BookDetails> {
                     height: 390,
                     width: double.infinity,
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        bottom: 20,
-                        left: 60,
-                        right: 0,
-                      ),
+                      padding: const EdgeInsets.only(top: 20, bottom: 20, left: 60, right: 0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -919,18 +530,10 @@ class _BookDetailsState extends State<BookDetails> {
                             children: const [
                               Text(
                                 'Similar Books',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(width: 6),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Colors.white54,
-                                size: 18,
-                              ),
+                              Icon(Icons.arrow_forward_ios_rounded, color: Colors.white54, size: 18),
                             ],
                           ),
 
@@ -947,11 +550,7 @@ class _BookDetailsState extends State<BookDetails> {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (context) => BookDetails(
-                                          book_id: similiarBook!.id!,
-                                        ),
-                                      ),
+                                      MaterialPageRoute(builder: (context) => BookDetails(book_id: similiarBook!.id!)),
                                     );
                                   },
                                   child: Container(
@@ -960,21 +559,14 @@ class _BookDetailsState extends State<BookDetails> {
                                     child: Column(
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
-                                          child:
-                                              similiarBook?.cover_image != null
+                                          borderRadius: BorderRadius.circular(8),
+                                          child: similiarBook?.cover_image != null
                                               ? Image.network(
-                                                  similiarBook?.cover_image! ??
-                                                      '',
+                                                  similiarBook?.cover_image! ?? '',
                                                   height: 270,
                                                   fit: BoxFit.cover,
                                                 )
-                                              : const Icon(
-                                                  Icons.book,
-                                                  size: 80,
-                                                ),
+                                              : const Icon(Icons.book, size: 80),
                                         ),
                                       ],
                                     ),
@@ -989,14 +581,7 @@ class _BookDetailsState extends State<BookDetails> {
                   ),
                 ],
 
-                Center(
-                  child: Divider(
-                    color: Colors.white24,
-                    thickness: 2,
-                    indent: 20,
-                    endIndent: 20,
-                  ),
-                ),
+                Center(child: Divider(color: Colors.white24, thickness: 2, indent: 20, endIndent: 20)),
 
                 const SizedBox(height: 20),
 
@@ -1005,12 +590,7 @@ class _BookDetailsState extends State<BookDetails> {
                     height: 400,
                     width: double.infinity,
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        bottom: 20,
-                        left: 60,
-                        right: 0,
-                      ),
+                      padding: const EdgeInsets.only(top: 20, bottom: 20, left: 60, right: 0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -1018,18 +598,10 @@ class _BookDetailsState extends State<BookDetails> {
                             children: [
                               Text(
                                 'Series Books of - ${series.series_title ?? ''}',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                               SizedBox(width: 6),
-                              Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                color: Colors.white54,
-                                size: 18,
-                              ),
+                              Icon(Icons.arrow_forward_ios_rounded, color: Colors.white54, size: 18),
                             ],
                           ),
 
@@ -1046,11 +618,7 @@ class _BookDetailsState extends State<BookDetails> {
                                   onTap: () {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                        builder: (context) => BookDetails(
-                                          book_id: seriesBook!.id!,
-                                        ),
-                                      ),
+                                      MaterialPageRoute(builder: (context) => BookDetails(book_id: seriesBook!.id!)),
                                     );
                                   },
                                   child: Container(
@@ -1059,20 +627,14 @@ class _BookDetailsState extends State<BookDetails> {
                                     child: Column(
                                       children: [
                                         ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            8,
-                                          ),
+                                          borderRadius: BorderRadius.circular(8),
                                           child: seriesBook?.cover_image != null
                                               ? Image.network(
-                                                  seriesBook?.cover_image! ??
-                                                      '',
+                                                  seriesBook?.cover_image! ?? '',
                                                   height: 270,
                                                   fit: BoxFit.cover,
                                                 )
-                                              : const Icon(
-                                                  Icons.book,
-                                                  size: 80,
-                                                ),
+                                              : const Icon(Icons.book, size: 80),
                                         ),
                                       ],
                                     ),
@@ -1092,10 +654,7 @@ class _BookDetailsState extends State<BookDetails> {
                 Container(
                   width: double.infinity,
                   height: 150,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 60,
-                    vertical: 15,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                   decoration: BoxDecoration(color: Colors.grey[900]),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1103,11 +662,7 @@ class _BookDetailsState extends State<BookDetails> {
                       SizedBox(height: 20),
                       const Text(
                         'follow Us on Social Media',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: TextStyle(color: Colors.white70, fontSize: 15, fontWeight: FontWeight.bold),
                       ),
 
                       const SizedBox(height: 20),
@@ -1115,27 +670,16 @@ class _BookDetailsState extends State<BookDetails> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.facebook, size: 30),
-                            color: Colors.white,
-                          ),
+                          IconButton(onPressed: () {}, icon: const Icon(Icons.facebook, size: 30), color: Colors.white),
                           IconButton(
                             onPressed: () {},
                             icon: const Icon(Icons.linked_camera, size: 30),
                             color: Colors.white,
                           ),
+                          IconButton(onPressed: () {}, icon: const Icon(Icons.camera, size: 30), color: Colors.white),
                           IconButton(
                             onPressed: () {},
-                            icon: const Icon(Icons.camera, size: 30),
-                            color: Colors.white,
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.share_location_rounded,
-                              size: 30,
-                            ),
+                            icon: const Icon(Icons.share_location_rounded, size: 30),
                             color: Colors.white,
                           ),
                         ],
@@ -1165,14 +709,93 @@ void _openImagePreview(BuildContext context, String imageUrl, String tag) {
         child: Center(
           child: Hero(
             tag: tag,
-            child: InteractiveViewer(
-              minScale: 1,
-              maxScale: 4,
-              child: Image.network(imageUrl, fit: BoxFit.fill),
-            ),
+            child: InteractiveViewer(minScale: 1, maxScale: 4, child: Image.network(imageUrl, fit: BoxFit.fill)),
           ),
         ),
       );
     },
   );
+}
+
+class _LibraryStatusSheet extends StatefulWidget {
+  final String initialLabel;
+
+  const _LibraryStatusSheet({Key? key, required this.initialLabel}) : super(key: key);
+
+  @override
+  State<_LibraryStatusSheet> createState() => _LibraryStatusSheetState();
+}
+
+class _LibraryStatusSheetState extends State<_LibraryStatusSheet> {
+  late String tempSelectedLabel;
+
+  @override
+  void initState() {
+    super.initState();
+    tempSelectedLabel = widget.initialLabel;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 420,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel', style: TextStyle(color: Colors.lightBlueAccent)),
+                ),
+                const Text(
+                  'Add to Library',
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(backgroundColor: Colors.black),
+                  onPressed: () {
+                    Navigator.pop(context, tempSelectedLabel);
+                  },
+                  child: const Text('Save', style: TextStyle(color: Colors.white)),
+                ),
+              ],
+            ),
+
+            const Divider(color: Colors.white30),
+
+            const SizedBox(height: 10),
+
+            const Text('Set your reading status', style: TextStyle(color: Colors.white70)),
+
+            const SizedBox(height: 10),
+
+            Expanded(
+              child: ListView.builder(
+                itemCount: allStatusesList().length,
+                itemBuilder: (context, index) {
+                  final statusItem = allStatusesList()[index];
+
+                  return RadioListTile<String>(
+                    value: statusItem.label,
+                    groupValue: tempSelectedLabel,
+                    activeColor: Colors.lightBlueAccent,
+                    title: Text(statusItem.label, style: const TextStyle(color: Colors.white)),
+                    onChanged: (value) {
+                      setState(() {
+                        tempSelectedLabel = value!;
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

@@ -93,6 +93,8 @@ List<ReadingStatusItem> allStatusesList() {
 
 String getSelectedStatusLabel(int bookdId) {
   bool isBookFound = booksList.any((book) => book.id == bookdId);
+  print('isBookFound: $isBookFound');
+  print('bookdId: $bookdId');
   if (isBookFound) {
     String selectedLabel = booksList.firstWhere((book) => book.id == bookdId).status.label;
     return selectedLabel;
@@ -102,9 +104,12 @@ String getSelectedStatusLabel(int bookdId) {
 }
 
 bool addOrUpdateBookStatus(int bookId, String status, Book book) {
+  print('addOrUpdateBookStatus called with bookId: $bookId, status: $status');
   int existingIndex = booksList.indexWhere((b) => b.id == bookId);
+  print('existingIndex: $existingIndex');
   if (existingIndex != -1) {
     final book = booksList[existingIndex];
+    print('Updating book: ${book.title} with status: $status');
     booksList[existingIndex] = ReadingStatusList(
       id: bookId,
       title: book.title,
@@ -116,8 +121,12 @@ bool addOrUpdateBookStatus(int bookId, String status, Book book) {
       addedDate: book.addedDate,
       page_count: book.page_count,
     );
+    print('Book updated successfully.');
     return true;
   } else {
+    print('Adding new book with id: $bookId and status: $status');
+    print('booksList.length before update: ${booksList.length}');
+
     booksList.add(
       ReadingStatusList(
         id: bookId,
@@ -131,6 +140,8 @@ bool addOrUpdateBookStatus(int bookId, String status, Book book) {
         page_count: book.page_count ?? 0,
       ),
     );
+    print('booksList.length after update: ${booksList.length}');
+
     return false;
   }
 }

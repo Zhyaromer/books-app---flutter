@@ -1,3 +1,4 @@
+import 'package:books_app__flutter/Search.dart';
 import 'package:books_app__flutter/discover.dart';
 import 'package:books_app__flutter/model/SeriesResponse.dart';
 import 'package:books_app__flutter/model/books.dart';
@@ -382,7 +383,7 @@ class _BookLibraryAppState extends State<BookLibraryApp> {
           ),
           const MyBooks(),
           Discover(),
-          const Center(child: Text('Search Screen')),
+          const Search(),
         ],
       ),
     );
